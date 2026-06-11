@@ -306,7 +306,7 @@
   <div class="header-logo">C</div>
   <div>
     <div class="header-title">Cysic Worker Dashboard</div>
-    <div class="header-sub">Cosmos chain · cysicmint_4399-1</div>
+    <div class="header-sub">Cosmos chain · cysicmint_4399-1 · <span id="ver"></span></div>
   </div>
   <div class="header-right">
     <span class="network-badge">Mainnet</span>
@@ -393,7 +393,15 @@
 
 <script>
 const GQL = 'https://hasura.cysic.xyz/v1/graphql';
-const DENOM = 1e9; // CYS uses 9 decimals
+const VERSION = 'v1.1.0';
+
+function getDenom(denom) {
+  const d = (denom || '').toLowerCase();
+  if (d.startsWith('a')) return 1e18;
+  if (d.startsWith('u')) return 1e6;
+  if (d === 'cys' || d === 'cgt') return 1;
+  return 1e9;
+}
 
 async function gql(queries) {
   const res = await fetch(GQL, {
@@ -413,19 +421,25 @@ function setStatus(msg, type) {
   sp.style.display = type === 'loading' ? 'block' : 'none';
 }
 
+function cleanDenom(d) {
+  const s = (d || 'cys').toLowerCase();
+  if (s.startsWith('a') || s.startsWith('u')) return s.slice(1).toUpperCase();
+  return s.toUpperCase();
+}
+
 function fmtCoins(coins) {
-  if (!coins || !Array.isArray(coins) || coins.length === 0) return '0';
+  if (!coins || !Array.isArray(coins) || coins.length === 0) return '0 CYS';
   const c = coins[0];
-  const amt = parseFloat(c.amount) / DENOM;
-  return amt.toLocaleString('en', { maximumFractionDigits: 4 }) + ' ' + (c.denom || 'CYS').replace('ucys','CYS').toUpperCase();
+  const amt = parseFloat(c.amount) / getDenom(c.denom);
+  return amt.toLocaleString('en', { maximumFractionDigits: 4 }) + ' ' + cleanDenom(c.denom);
 }
 
 function fmtRaw(coins) {
   if (!coins || !Array.isArray(coins) || coins.length === 0) return '0 CYS';
   return coins.map(c => {
-    const amt = parseFloat(c.amount) / DENOM;
-    return amt.toLocaleString('en', { maximumFractionDigits: 4 }) + ' ' + (c.denom || 'CYS').replace('ucys','CYS').toUpperCase();
-  }).join(', ');
+    const amt = parseFloat(c.amount) / getDenom(c.denom);
+    return amt.toLocaleString('en', { maximumFractionDigits: 4 }) + ' ' + cleanDenom(c.denom);
+  }).join(' · ');
 }
 
 function shortHash(h) {
@@ -549,6 +563,7 @@ window.addEventListener('DOMContentLoaded', () => {
     loadAll();
   }
   // Enter key support
+  document.getElementById('ver').textContent = VERSION;
   document.getElementById('addrInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') loadAll();
   });
