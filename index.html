@@ -393,7 +393,7 @@
 
 <script>
 const GQL = 'https://hasura.cysic.xyz/v1/graphql';
-const DENOM = 1e6; // adjust if CYS uses different decimals
+const DENOM = 1e9; // CYS uses 9 decimals
 
 async function gql(queries) {
   const res = await fetch(GQL, {
