@@ -491,6 +491,9 @@ async function loadAll() {
     ]);
 
     const balData    = results[0]?.data?.accountBalances?.coins || [];
+    console.log('RAW balData:', JSON.stringify(balData));
+    console.log('RAW stakedData:', JSON.stringify(results[1]?.data?.delegationBalance?.coins));
+    console.log('RAW rewards:', JSON.stringify(results[3]?.data?.delegationRewards));
     const stakedData = results[1]?.data?.delegationBalance?.coins || [];
     const unbondData = results[2]?.data?.unbondingBalance?.coins || [];
     const rewardsData = results[3]?.data?.delegationRewards || [];
