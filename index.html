@@ -501,7 +501,7 @@ async function loadAll() {
     rewardsData.forEach(r => {
       if (r.coins) r.coins.forEach(c => { totalRewardAmt += parseFloat(c.amount || 0); });
     });
-    const totalRewardStr = (totalRewardAmt / DENOM).toLocaleString('en', { maximumFractionDigits: 4 }) + ' CYS';
+    const totalRewardStr = (totalRewardAmt / 1e9).toLocaleString('en', { maximumFractionDigits: 4 }) + ' CYS';
 
     // Fill cards
     document.getElementById('addrDisplay').textContent = addr;
