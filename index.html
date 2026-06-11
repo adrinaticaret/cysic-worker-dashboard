@@ -393,14 +393,11 @@
 
 <script>
 const GQL = 'https://hasura.cysic.xyz/v1/graphql';
-const VERSION = 'v1.1.0';
+const VERSION = 'v1.2.0';
 
 function getDenom(denom) {
-  const d = (denom || '').toLowerCase();
-  if (d.startsWith('a')) return 1e18;
-  if (d.startsWith('u')) return 1e6;
-  if (d === 'cys' || d === 'cgt') return 1;
-  return 1e9;
+  // Cysic returns plain "CYS"/"CGT" but amounts are in atto (1e18)
+  return 1e18;
 }
 
 async function gql(queries) {
@@ -422,9 +419,7 @@ function setStatus(msg, type) {
 }
 
 function cleanDenom(d) {
-  const s = (d || 'cys').toLowerCase();
-  if (s.startsWith('a') || s.startsWith('u')) return s.slice(1).toUpperCase();
-  return s.toUpperCase();
+  return (d || 'CYS').toUpperCase();
 }
 
 function fmtCoins(coins) {
@@ -491,9 +486,8 @@ async function loadAll() {
     ]);
 
     const balData    = results[0]?.data?.accountBalances?.coins || [];
-    console.log('RAW balData:', JSON.stringify(balData));
-    console.log('RAW stakedData:', JSON.stringify(results[1]?.data?.delegationBalance?.coins));
-    console.log('RAW rewards:', JSON.stringify(results[3]?.data?.delegationRewards));
+
+
     const stakedData = results[1]?.data?.delegationBalance?.coins || [];
     const unbondData = results[2]?.data?.unbondingBalance?.coins || [];
     const rewardsData = results[3]?.data?.delegationRewards || [];
@@ -504,7 +498,7 @@ async function loadAll() {
     rewardsData.forEach(r => {
       if (r.coins) r.coins.forEach(c => { totalRewardAmt += parseFloat(c.amount || 0); });
     });
-    const totalRewardStr = (totalRewardAmt / 1e9).toLocaleString('en', { maximumFractionDigits: 4 }) + ' CYS';
+    const totalRewardStr = (totalRewardAmt / 1e18).toLocaleString('en', { maximumFractionDigits: 4 }) + ' CYS';
 
     // Fill cards
     document.getElementById('addrDisplay').textContent = addr;
