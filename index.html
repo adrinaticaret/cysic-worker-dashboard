@@ -178,7 +178,7 @@ a.hl:hover{text-decoration:underline}
   <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver">v4.0.0</span>
+    <span class="ver">v4.1.0</span>
   </div>
 </div>
 
@@ -242,7 +242,7 @@ a.hl:hover{text-decoration:underline}
     <button class="tab active" onclick="sw('overview')">Overview</button>
     <button class="tab" onclick="sw('nft')">NFTs</button>
     <button class="tab" onclick="sw('uptime')">Uptime</button>
-    <button class="tab" onclick="sw('cosmos')">Cosmos</button>
+    <button class="tab" onclick="sw('cosmos')">Balances/Stake</button>
     <button class="tab" onclick="sw('alerts')">Alerts</button>
   </div>
 
@@ -429,79 +429,39 @@ function renderTimeline(txs){
   }
 }
 
-/* NFT via Base RPC eth_call */
+/* NFT via Base Blockscout API */
 async function loadNFTs(evmAddr){
   try{
-    // balanceOf
-    const balResp=await fetch(BASE_RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-      jsonrpc:'2.0',id:1,method:'eth_call',params:[{
-        to:NFT_CONTRACT,
-        data:'0x70a08231000000000000000000000000'+evmAddr.slice(2).toLowerCase().padStart(64,'0')
-      },'latest']
-    })});
-    const balData=await balResp.json();
-    const balance=parseInt(balData.result,16);
-    document.getElementById('oNFT').textContent=balance;
-    document.getElementById('nftBadge').textContent=balance;
+    // Use Base Blockscout API - get NFT instances for this contract held by address
+    const url=`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`;
+    const resp=await fetch(url);
+    if(!resp.ok) throw new Error('Blockscout HTTP '+resp.status);
+    const data=await resp.json();
+    const items=data.items||[];
 
-    if(balance===0){
+    document.getElementById('oNFT').textContent=items.length;
+    document.getElementById('nftBadge').textContent=items.length;
+
+    if(items.length===0){
       document.getElementById('nftGrid').innerHTML='<div class="nft-empty">No Cysic CUBE NFTs found on Base for this address.</div>';
       document.getElementById('multiBar').style.width='0%';
       document.getElementById('multiVal').textContent='No boost';
       return;
     }
 
-    // tokenOfOwnerByIndex for each
-    const tokenIds=[];
-    for(let i=0;i<Math.min(balance,10);i++){
-      const r=await fetch(BASE_RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-        jsonrpc:'2.0',id:i+10,method:'eth_call',params:[{
-          to:NFT_CONTRACT,
-          data:'0x2f745c59'+evmAddr.slice(2).toLowerCase().padStart(64,'0')+i.toString(16).padStart(64,'0')
-        },'latest']
-      })});
-      const rd=await r.json();
-      if(rd.result&&rd.result!=='0x')tokenIds.push(parseInt(rd.result,16));
-    }
+    const nfts=items.map(item=>{
+      const meta=item.metadata||{};
+      const name=meta.name||item.token?.name||('Token #'+item.id);
+      const image=(meta.image||meta.image_url||'').replace('ipfs://','https://ipfs.io/ipfs/');
+      return{id:item.id,name,image};
+    });
 
-    // tokenURI for each
-    const nfts=[];
-    for(const tid of tokenIds){
-      try{
-        const r=await fetch(BASE_RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-          jsonrpc:'2.0',id:tid+100,method:'eth_call',params:[{
-            to:NFT_CONTRACT,
-            data:'0xc87b56dd'+tid.toString(16).padStart(64,'0')
-          },'latest']
-        })});
-        const rd=await r.json();
-        // decode ABI string
-        let uri='';
-        if(rd.result&&rd.result.length>130){
-          const hex=rd.result.slice(2);
-          const offset=parseInt(hex.slice(0,64),16)*2;
-          const len=parseInt(hex.slice(offset,offset+64),16)*2;
-          const strHex=hex.slice(offset+64,offset+64+len);
-          uri=decodeURIComponent(strHex.match(/.{2}/g).map(b=>('%'+b)).join(''));
-        }
-        // fetch metadata
-        let meta={name:'Token #'+tid,image:''};
-        if(uri.startsWith('http')){
-          const mResp=await fetch(uri.replace('ipfs://','https://ipfs.io/ipfs/')).catch(()=>null);
-          if(mResp&&mResp.ok)meta=await mResp.json().catch(()=>meta);
-        } else if(uri.startsWith('data:application/json')){
-          meta=JSON.parse(atob(uri.split(',')[1]));
-        }
-        nfts.push({id:tid,name:meta.name||'Token #'+tid,image:(meta.image||'').replace('ipfs://','https://ipfs.io/ipfs/'),uri});
-      }catch(e){nfts.push({id:tid,name:'Token #'+tid,image:''});}
-    }
-
-    // render
     document.getElementById('nftGrid').innerHTML=nfts.map(n=>{
       const tierName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';
       const t=TIERS[tierName]||TIERS['Tesseract'];
       return`<div class="nft-card">
-        ${n.image?`<img class="nft-img" src="${n.image}" alt="${n.name}" onerror="this.style.display='none'"/>`:`<div class="nft-img" style="display:flex;align-items:center;justify-content:center;font-size:28px">🧊</div>`}
+        ${n.image?`<img class="nft-img" src="${n.image}" alt="${n.name}" onerror="this.style.background='var(--s3)';this.style.display='flex';"/>`
+          :`<div class="nft-img" style="display:flex;align-items:center;justify-content:center;font-size:28px">🧊</div>`}
         <div class="nft-info">
           <div class="nft-name">${n.name}</div>
           <div class="nft-id">#${n.id}</div>
@@ -510,7 +470,7 @@ async function loadNFTs(evmAddr){
       </div>`;
     }).join('');
 
-    // multiplier — best NFT
+    // best multiplier
     let bestMulti=1.0;
     nfts.forEach(n=>{
       const tierName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';
