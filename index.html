@@ -1,450 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cysic Worker Dashboard</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Cysic Node Dashboard</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #080c10; --surface: #0e1419; --surface2: #141c24;
-    --border: #1e2d3d; --accent: #00d4ff; --accent2: #7c3aed;
-    --green: #00e676; --amber: #ffb300; --red: #ff5252;
-    --text: #e2e8f0; --muted: #64748b;
-    --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
-  }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090c;
+  --s1:#0d1117;
+  --s2:#111820;
+  --s3:#161f2a;
+  --border:#1c2a38;
+  --gold:#c9a84c;
+  --gold2:#e8c87a;
+  --green:#00e676;
+  --cyan:#00d4ff;
+  --red:#ff5252;
+  --amber:#ffb300;
+  --purple:#7c3aed;
+  --text:#e8edf2;
+  --muted:#4a6070;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
 
-  .header { border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; background: var(--surface); }
-  .logo { width: 30px; height: 30px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 14px; flex-shrink: 0; }
-  .header-title { font-size: 14px; font-weight: 600; }
-  .header-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
-  .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-  .badge-net { font-family: var(--mono); font-size: 10px; padding: 3px 8px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); border-radius: 20px; color: var(--accent); }
-  .wallet-chip { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; gap: 6px; }
-  .wdot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
-  .btn-dis { font-size: 11px; color: var(--muted); background: none; border: none; cursor: pointer; }
-  .btn-dis:hover { color: var(--red); }
+/* HEADER */
+.header{background:linear-gradient(180deg,#0d1117 0%,#0a0f15 100%);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;height:60px;gap:1rem;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:0.05em;color:var(--gold2)}
+.logo-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--gold),#8b6914);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#000}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.net-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:20px;color:var(--gold)}
+.ver-badge{font-family:var(--mono);font-size:10px;color:var(--muted)}
 
-  /* CONNECT */
-  .connect-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 62px); padding: 2rem; text-align: center; }
-  .connect-icon { font-size: 52px; margin-bottom: 1.5rem; }
-  .connect-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
-  .connect-sub { font-size: 14px; color: var(--muted); margin-bottom: 2rem; max-width: 380px; line-height: 1.7; }
-  .btn-connect { padding: 13px 30px; background: var(--accent); border: none; border-radius: 10px; color: #000; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: opacity 0.15s; }
-  .btn-connect:hover { opacity: 0.85; }
-  .btn-connect:disabled { opacity: 0.4; cursor: not-allowed; }
-  .connect-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+/* INPUT SECTION */
+.input-wrap{padding:2rem 2rem 0;max-width:1000px}
+.input-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px}
+.input-row{display:flex;gap:8px;flex-wrap:wrap}
+.addr-input{flex:1;min-width:280px;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
+.addr-input:focus{border-color:var(--gold)}
+.addr-input::placeholder{color:var(--muted)}
+.btn-load{padding:10px 22px;background:linear-gradient(135deg,var(--gold),#8b6914);border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.btn-load:hover{opacity:.85}
+.btn-load:disabled{opacity:.4;cursor:not-allowed}
 
-  /* STATUS */
-  .status-wrap { padding: 0 2rem; }
-  .sbar { padding: 10px 14px; border-radius: 8px; font-size: 13px; display: none; align-items: center; gap: 8px; margin: 1rem 0; }
-  .sbar.show { display: flex; }
-  .sbar.loading { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2); color: var(--accent); }
-  .sbar.error { background: rgba(255,82,82,0.07); border: 1px solid rgba(255,82,82,0.2); color: var(--red); }
-  .sbar.ok { background: rgba(0,230,118,0.07); border: 1px solid rgba(0,230,118,0.2); color: var(--green); }
-  .spinner { width: 13px; height: 13px; border: 2px solid rgba(0,212,255,0.3); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* STATUS */
+.sbar{margin:1rem 2rem 0;padding:10px 14px;border-radius:8px;font-size:13px;display:none;align-items:center;gap:8px;max-width:1000px}
+.sbar.show{display:flex}
+.sbar.loading{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);color:var(--cyan)}
+.sbar.error{background:rgba(255,82,82,.07);border:1px solid rgba(255,82,82,.2);color:var(--red)}
+.sbar.ok{background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);color:var(--green)}
+.spin{width:13px;height:13px;border:2px solid rgba(0,212,255,.3);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-  /* MAIN */
-  .main { padding: 1.5rem 2rem 3rem; max-width: 900px; display: none; }
+/* MAIN */
+.main{padding:1.5rem 2rem 4rem;max-width:1000px;display:none}
 
-  /* PROFILE */
-  .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 16px; }
-  .avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); background: var(--surface2); flex-shrink: 0; }
-  .profile-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-  .profile-addr { font-family: var(--mono); font-size: 11px; color: var(--muted); word-break: break-all; }
-  .profile-right { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-  .status-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
-  .sdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .sdot.on { background: var(--green); box-shadow: 0 0 5px var(--green); }
-  .sdot.off { background: var(--muted); }
+/* HEALTH SCORE */
+.health-wrap{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.health-score-wrap{position:relative;width:110px;height:110px;flex-shrink:0}
+.health-ring{transform:rotate(-90deg)}
+.health-ring-bg{fill:none;stroke:var(--s3);stroke-width:8}
+.health-ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s ease}
+.health-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.health-num .score{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1}
+.health-num .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.health-info{flex:1}
+.health-title{font-size:16px;font-weight:600;margin-bottom:6px}
+.health-sub{font-size:13px;color:var(--muted);line-height:1.6}
+.health-factors{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.hf{display:flex;align-items:center;gap:5px;font-size:12px;padding:4px 10px;background:var(--s2);border-radius:20px;border:1px solid var(--border)}
+.hf-dot{width:6px;height:6px;border-radius:50%}
 
-  /* CARDS */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.25rem; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; position: relative; overflow: hidden; }
-  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--cc, var(--accent)); }
-  .card.g { --cc: var(--green); } .card.a { --cc: var(--amber); } .card.p { --cc: var(--accent2); } .card.r { --cc: var(--red); }
-  .clabel { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
-  .cval { font-family: var(--mono); font-size: 20px; font-weight: 600; line-height: 1; }
-  .csub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+/* TABS */
+.tabs{display:flex;gap:2px;margin-bottom:1.25rem;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:4px}
+.tab{flex:1;padding:9px;text-align:center;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-radius:8px;transition:all .2s;border:none;background:none}
+.tab:hover{color:var(--text)}
+.tab.active{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));color:var(--gold2);border:1px solid rgba(201,168,76,.2)}
 
-  /* SECTION */
-  .section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.25rem; overflow: hidden; }
-  .sec-head { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
-  .sec-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500; }
-  .sec-badge { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 10px; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-  .dot.g { background: var(--green); } .dot.a { background: var(--amber); }
+/* TAB PANELS */
+.panel{display:none}
+.panel.active{display:block}
 
-  /* LAST TASK */
-  .last-task { padding: 1.25rem 1.5rem; }
-  .lt-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-  .lt-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-  .lt-val { font-family: var(--mono); font-size: 13px; color: var(--text); }
-  .lt-val.green { color: var(--green); font-weight: 600; }
-  .lt-val.link { color: var(--accent); text-decoration: none; font-size: 12px; }
-  .lt-val.link:hover { text-decoration: underline; }
-  .badge { display: inline-block; padding: 3px 10px; border-radius: 5px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
-  .badge.ok { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
-  .badge.fail { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.25); }
-  .divider { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:1.25rem}
+.card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.1rem;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cc,var(--gold))}
+.card.g{--cc:var(--green)}.card.c{--cc:var(--cyan)}.card.p{--cc:var(--purple)}.card.r{--cc:var(--red)}.card.a{--cc:var(--amber)}
+.clabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+.cval{font-family:var(--mono);font-size:18px;font-weight:600;line-height:1}
+.csub{font-size:11px;color:var(--muted);margin-top:4px}
 
-  /* COSMOS */
-  .cosmos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-  .cosmos-item { padding: 14px 16px; border-right: 1px solid var(--border); }
-  .cosmos-item:last-child { border-right: none; }
-  .cosmos-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
-  .cosmos-val { font-family: var(--mono); font-size: 15px; font-weight: 600; }
+/* SECTION */
+.sec{background:var(--s1);border:1px solid var(--border);border-radius:10px;margin-bottom:1.1rem;overflow:hidden}
+.sec-head{padding:11px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.sec-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500}
+.sec-badge{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--muted);background:var(--s2);padding:2px 8px;border-radius:10px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.dot.g{background:var(--green)}.dot.c{background:var(--cyan)}.dot.r{background:var(--red)}.dot.a{background:var(--amber)}
 
-  /* TX TABLE */
-  table { width: 100%; border-collapse: collapse; }
-  th { padding: 9px 14px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); background: var(--surface2); border-bottom: 1px solid var(--border); }
-  td { padding: 10px 14px; font-size: 12px; border-bottom: 1px solid rgba(30,45,61,0.5); }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  a.hl { font-family: var(--mono); font-size: 11px; color: var(--accent); text-decoration: none; }
-  a.hl:hover { text-decoration: underline; }
-  .empty td { text-align: center; color: var(--muted); padding: 1.5rem; }
+/* TABLE */
+table{width:100%;border-collapse:collapse}
+th{padding:9px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--s2);border-bottom:1px solid var(--border)}
+td{padding:10px 14px;font-size:12px;border-bottom:1px solid rgba(28,42,56,.6)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.015)}
+a.hl{font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none}
+a.hl:hover{text-decoration:underline}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:var(--mono)}
+.badge.ok{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2)}
+.badge.fail{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
+.empty td{text-align:center;color:var(--muted);padding:2rem}
 
-  @media (max-width: 600px) {
-    .header { padding: 1rem; }
-    .main { padding: 1rem 1rem 2rem; }
-    .cosmos-grid { grid-template-columns: 1fr; }
-    .cosmos-item { border-right: none; border-bottom: 1px solid var(--border); }
-    .profile-right { display: none; }
-  }
+/* UPTIME TIMELINE */
+.timeline-wrap{padding:1rem 1.5rem}
+.tl-label{font-size:11px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.tl-bars{display:flex;gap:3px;align-items:flex-end;height:40px}
+.tl-bar{flex:1;border-radius:3px;min-height:4px;transition:height .3s ease;cursor:pointer;position:relative}
+.tl-bar:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#1c2a38;border:1px solid var(--border);padding:4px 8px;border-radius:5px;font-size:10px;white-space:nowrap;color:var(--text);z-index:10}
+.tl-stats{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}
+
+/* ALERTS */
+.alert-wrap{padding:1rem 1.5rem}
+.alert-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.alert-input{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;width:120px}
+.alert-input:focus{border-color:var(--gold)}
+.alert-label{font-size:12px;color:var(--muted);flex:1}
+.btn-set{padding:6px 14px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:6px;color:var(--gold2);font-size:12px;cursor:pointer}
+.btn-set:hover{background:rgba(201,168,76,.25)}
+.alert-active{padding:10px 14px;background:rgba(255,82,82,.08);border:1px solid rgba(255,82,82,.2);border-radius:8px;font-size:13px;color:var(--red);display:none;align-items:center;gap:8px;margin-bottom:10px}
+.alert-active.show{display:flex}
+.alert-ok{padding:10px 14px;background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);border-radius:8px;font-size:13px;color:var(--green);display:none;align-items:center;gap:8px;margin-bottom:10px}
+.alert-ok.show{display:flex}
+
+/* COSMOS GRID */
+.cg{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
+.cg-item{padding:14px 16px;border-right:1px solid var(--border)}
+.cg-item:nth-child(even){border-right:none}
+.cg-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px}
+.cg-val{font-family:var(--mono);font-size:14px;font-weight:600}
+
+@media(max-width:600px){
+  .header{padding:0 1rem}
+  .main,.input-wrap{padding-left:1rem;padding-right:1rem}
+  .cg{grid-template-columns:1fr}
+  .cg-item{border-right:none;border-bottom:1px solid var(--border)}
+}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">C</div>
-  <div>
-    <div class="header-title">Cysic Worker Dashboard</div>
-    <div class="header-sub">v2.1.0 · cysicmint_4399-1</div>
+  <div class="logo">
+    <div class="logo-icon">C</div>
+    CYSIC
   </div>
+  <span style="font-size:12px;color:var(--muted);font-weight:400">Worker Dashboard</span>
   <div class="header-right">
-    <span class="badge-net">Mainnet</span>
-    <div id="wChip" style="display:none" class="wallet-chip">
-      <span class="wdot"></span>
-      <span id="wAddr">—</span>
-      <button class="btn-dis" onclick="disconnect()">✕</button>
-    </div>
+    <span class="net-badge">Mainnet</span>
+    <span class="ver-badge">v3.0.0</span>
   </div>
 </div>
 
-<!-- Connect screen -->
-<div id="connectScreen" class="connect-screen">
-  <div class="connect-icon">⚡</div>
-  <div class="connect-title">Cysic Worker Dashboard</div>
-  <div class="connect-sub">Connect your MetaMask wallet to view your verifier node stats, task history, and rewards.</div>
-  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">
-    <span>🦊</span> Connect MetaMask
-  </button>
-  <div class="connect-note">Signs a message only — no transaction, no gas.</div>
+<div class="input-wrap">
+  <div class="input-label">Keplr Address (cysic1...)</div>
+  <div class="input-row">
+    <input class="addr-input" id="addrIn" placeholder="cysic1..." spellcheck="false"/>
+    <button class="btn-load" id="loadBtn" onclick="loadAll()">Load Dashboard</button>
+  </div>
 </div>
 
-<div class="status-wrap">
-  <div id="sbar" class="sbar">
-    <div id="spin" class="spinner"></div>
-    <span id="smsg"></span>
-  </div>
+<div id="sbar" class="sbar">
+  <div id="spin" class="spin"></div>
+  <span id="smsg"></span>
 </div>
 
 <div class="main" id="mainDash">
 
-  <!-- Profile -->
-  <div class="profile-card">
-    <img class="avatar" id="pAvatar" src="" alt=""
-      onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 52 52%22><rect width=%2252%22 height=%2252%22 fill=%22%23141c24%22 rx=%2226%22/><text x=%2226%22 y=%2233%22 text-anchor=%22middle%22 font-size=%2222%22>👤</text></svg>'" />
-    <div>
-      <div class="profile-name" id="pName">—</div>
-      <div class="profile-addr" id="pAddr">—</div>
-    </div>
-    <div class="profile-right" id="pStatus"></div>
-  </div>
-
-  <!-- Summary cards -->
-  <div class="cards">
-    <div class="card g">
-      <div class="clabel">Task Rewards</div>
-      <div class="cval" id="cRewards">—</div>
-      <div class="csub">CYS earned from tasks</div>
-    </div>
-    <div class="card a">
-      <div class="clabel">Tasks Verified</div>
-      <div class="cval" id="cTasks">—</div>
-      <div class="csub">Total completed</div>
-    </div>
-    <div class="card p">
-      <div class="clabel">NFTs</div>
-      <div class="cval" id="cNFT">—</div>
-      <div class="csub">Attached multiplier</div>
-    </div>
-    <div class="card">
-      <div class="clabel">Multiplier</div>
-      <div class="cval" id="cMulti">—</div>
-      <div class="csub">Current boost</div>
-    </div>
-  </div>
-
-  <!-- Last approved task -->
-  <div class="section">
-    <div class="sec-head">
-      <div class="dot g"></div>
-      <div class="sec-title">Last Approved Task</div>
-      <div id="lastTaskBadge" class="sec-badge">—</div>
-    </div>
-    <div class="last-task" id="lastTaskBody">
-      <div style="color:var(--muted);font-size:13px;text-align:center;padding:1rem">No task data</div>
-    </div>
-  </div>
-
-  <!-- Cosmos balance -->
-  <div class="section">
-    <div class="sec-head">
-      <div class="dot a"></div>
-      <div class="sec-title">Cosmos Chain · Balances</div>
-    </div>
-    <div class="cosmos-grid">
-      <div class="cosmos-item">
-        <div class="cosmos-label">Available CYS</div>
-        <div class="cosmos-val" id="cosBalance">—</div>
-      </div>
-      <div class="cosmos-item">
-        <div class="cosmos-label">Staking Rewards</div>
-        <div class="cosmos-val" id="cosRewards">—</div>
+  <!-- Health Score -->
+  <div class="health-wrap">
+    <div class="health-score-wrap">
+      <svg class="health-ring" width="110" height="110" viewBox="0 0 110 110">
+        <circle class="health-ring-bg" cx="55" cy="55" r="46"/>
+        <circle class="health-ring-fill" id="healthRing" cx="55" cy="55" r="46"
+          stroke-dasharray="289" stroke-dashoffset="289"/>
+      </svg>
+      <div class="health-num">
+        <div class="score" id="healthNum">0</div>
+        <div class="label">Health</div>
       </div>
     </div>
+    <div class="health-info">
+      <div class="health-title" id="healthTitle">Node Health</div>
+      <div class="health-sub" id="healthSub">Loading node data...</div>
+      <div class="health-factors" id="healthFactors"></div>
+    </div>
   </div>
 
-  <!-- Recent tx -->
-  <div class="section">
-    <div class="sec-head">
-      <div class="dot"></div>
-      <div class="sec-title">Recent Transactions</div>
-      <div class="sec-badge" id="txBadge">0</div>
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview')">Overview</button>
+    <button class="tab" onclick="switchTab('uptime')">Uptime</button>
+    <button class="tab" onclick="switchTab('cosmos')">Cosmos Chain</button>
+    <button class="tab" onclick="switchTab('alerts')">Alerts</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div class="panel active" id="tab-overview">
+    <div class="cards">
+      <div class="card g">
+        <div class="clabel">CYS Balance</div>
+        <div class="cval" id="cBal">—</div>
+        <div class="csub">Available</div>
+      </div>
+      <div class="card c">
+        <div class="clabel">Staking Rewards</div>
+        <div class="cval" id="cStakeR">—</div>
+        <div class="csub">Unclaimed</div>
+      </div>
+      <div class="card a">
+        <div class="clabel">Staked</div>
+        <div class="cval" id="cStaked">—</div>
+        <div class="csub">Delegated CGT</div>
+      </div>
+      <div class="card p">
+        <div class="clabel">Total Txs</div>
+        <div class="cval" id="cTxCount">—</div>
+        <div class="csub">All time</div>
+      </div>
+      <div class="card">
+        <div class="clabel">Last Activity</div>
+        <div class="cval" id="cLastAct" style="font-size:13px">—</div>
+        <div class="csub">Most recent tx</div>
+      </div>
     </div>
-    <div style="overflow-x:auto">
-      <table>
-        <thead>
-          <tr><th>Hash</th><th>Type</th><th>Height</th><th>Time</th><th>Status</th></tr>
-        </thead>
-        <tbody id="txTable"></tbody>
-      </table>
+
+    <div class="sec">
+      <div class="sec-head">
+        <div class="dot g"></div>
+        <div class="sec-title">Recent Transactions</div>
+        <div class="sec-badge" id="txBadge">0</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Hash</th><th>Type</th><th>Height</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody id="txTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPTIME TAB -->
+  <div class="panel" id="tab-uptime">
+    <div class="sec">
+      <div class="sec-head">
+        <div class="dot c"></div>
+        <div class="sec-title">Activity Timeline</div>
+        <div class="sec-badge" id="uptimePct">—</div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="tl-label">Last 30 days — bar height = activity level</div>
+        <div class="tl-bars" id="tlBars"></div>
+        <div class="tl-stats">
+          <span>30 days ago</span>
+          <span id="tlEstimate">Estimating uptime...</span>
+          <span>Today</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card c">
+        <div class="clabel">Est. Uptime</div>
+        <div class="cval" id="uptimeVal">—</div>
+        <div class="csub">Last 30 days</div>
+      </div>
+      <div class="card g">
+        <div class="clabel">Active Days</div>
+        <div class="cval" id="activeDays">—</div>
+        <div class="csub">Days with tx activity</div>
+      </div>
+      <div class="card a">
+        <div class="clabel">Avg Gap</div>
+        <div class="cval" id="avgGap">—</div>
+        <div class="csub">Between transactions</div>
+      </div>
+      <div class="card r">
+        <div class="clabel">Longest Gap</div>
+        <div class="cval" id="longestGap">—</div>
+        <div class="csub">Possible downtime</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COSMOS TAB -->
+  <div class="panel" id="tab-cosmos">
+    <div class="sec">
+      <div class="sec-head">
+        <div class="dot a"></div>
+        <div class="sec-title">Chain Balances</div>
+      </div>
+      <div class="cg">
+        <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cosAvail">—</div></div>
+        <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cosStaked">—</div></div>
+        <div class="cg-item"><div class="cg-label">Delegation Rewards</div><div class="cg-val" id="cosDelR">—</div></div>
+        <div class="cg-item"><div class="cg-label">Unbonding</div><div class="cg-val" id="cosUnbond">—</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head">
+        <div class="dot"></div>
+        <div class="sec-title">Delegation Rewards by Validator</div>
+        <div class="sec-badge" id="valCount">0</div>
+      </div>
+      <div id="valList"></div>
+    </div>
+  </div>
+
+  <!-- ALERTS TAB -->
+  <div class="panel" id="tab-alerts">
+    <div class="sec">
+      <div class="sec-head">
+        <div class="dot r"></div>
+        <div class="sec-title">Alert Thresholds</div>
+      </div>
+      <div class="alert-wrap">
+        <div id="alertBanner" class="alert-active">⚠️ <span id="alertMsg"></span></div>
+        <div id="alertOkBanner" class="alert-ok">✅ <span id="alertOkMsg">Node is healthy</span></div>
+
+        <div class="alert-row">
+          <span class="alert-label">Warn if CYS balance drops below</span>
+          <input class="alert-input" id="alBal" type="number" placeholder="e.g. 10" value="10"/>
+          <span style="font-size:12px;color:var(--muted)">CYS</span>
+        </div>
+        <div class="alert-row">
+          <span class="alert-label">Warn if no transaction in last</span>
+          <input class="alert-input" id="alGap" type="number" placeholder="e.g. 7" value="7"/>
+          <span style="font-size:12px;color:var(--muted)">days</span>
+        </div>
+        <button class="btn-set" onclick="checkAlerts()">Check Now</button>
+
+        <div style="margin-top:1.5rem">
+          <div class="sec-title" style="margin-bottom:10px">CURRENT STATUS</div>
+          <div id="alertStatus" style="font-size:13px;color:var(--muted)">Load a dashboard first.</div>
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
 
 <script>
-const API     = 'https://api.cysic.xyz/api/v1';
-const GQL     = 'https://hasura.cysic.xyz/v1/graphql';
-const SIGN_MSG = 'Welcome to Cysic Dashboard';
+const GQL = 'https://hasura.cysic.xyz/v1/graphql';
+let STATE = {};
 
-let evmAddr = '', evmSign = '';
-
-/* ── helpers ── */
-function short(a, s=6, e=4) { return a ? a.slice(0,s)+'...'+a.slice(-e) : '—'; }
-function fmtTs(ts) {
-  if (!ts) return '—';
-  const d = new Date(parseInt(ts)*1000);
-  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-       +' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+/* ── utils ── */
+function short(a,s=8,e=6){ return a?a.slice(0,s)+'...'+a.slice(-e):'—'; }
+function fmtDate(iso){
+  if(!iso) return '—';
+  const d=new Date(iso);
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
 }
-function getDenom(d){ return 1e18; }
 function fmtCoin(coins){
-  if(!coins||!coins.length) return '0 CYS';
+  if(!coins||!coins.length) return '0';
   const c=coins[0];
-  return (parseFloat(c.amount)/getDenom(c.denom)).toLocaleString('en',{maximumFractionDigits:4})+' '+(c.denom||'CYS').toUpperCase();
+  const amt=(parseFloat(c.amount)/1e18).toLocaleString('en',{maximumFractionDigits:4});
+  return amt+' '+(c.denom||'CYS').toUpperCase();
 }
-
-/* ── status bar ── */
-function ss(msg, type){
+function fmtAllCoins(coins){
+  if(!coins||!coins.length) return '0 CYS';
+  return coins.map(c=>(parseFloat(c.amount)/1e18).toLocaleString('en',{maximumFractionDigits:4})+' '+c.denom.toUpperCase()).join(' · ');
+}
+function ss(msg,type){
   const b=document.getElementById('sbar');
   b.className='sbar show '+type;
   document.getElementById('smsg').textContent=msg;
   document.getElementById('spin').style.display=type==='loading'?'block':'none';
 }
-function hs(){ document.getElementById('sbar').className='sbar'; }
+function hs(){document.getElementById('sbar').className='sbar';}
 
-/* ── wallet ── */
-async function connectWallet(){
-  if(!window.ethereum){ ss('MetaMask not found. Please install it.','error'); return; }
-  const btn=document.getElementById('connectBtn');
-  btn.disabled=true;
-  ss('Requesting wallet access...','loading');
-  try {
-    const accounts=await window.ethereum.request({method:'eth_requestAccounts'});
-    evmAddr=accounts[0];
-    ss('Signing authentication message...','loading');
-    evmSign=await window.ethereum.request({method:'personal_sign',params:[SIGN_MSG,evmAddr]});
-    document.getElementById('wAddr').textContent=short(evmAddr);
-    document.getElementById('wChip').style.display='flex';
-    document.getElementById('connectScreen').style.display='none';
-    await loadAll();
-  } catch(e){
-    ss('Error: '+(e.message||'Rejected'),'error');
-    btn.disabled=false;
+/* ── tabs ── */
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    const ids=['overview','uptime','cosmos','alerts'];
+    t.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('.panel').forEach(p=>{
+    p.classList.toggle('active',p.id==='tab-'+id);
+  });
+}
+
+/* ── health score ── */
+function calcHealth(bal, txs, lastTx){
+  let score=0, factors=[];
+  // balance factor (max 30)
+  const balNum=parseFloat(bal)||0;
+  if(balNum>=100){score+=30;factors.push({label:'Balance OK',color:'var(--green)'})}
+  else if(balNum>=10){score+=20;factors.push({label:'Balance Low',color:'var(--amber)'})}
+  else{score+=5;factors.push({label:'Balance Critical',color:'var(--red)'})}
+  // activity factor (max 40)
+  if(txs>=20){score+=40;factors.push({label:'High Activity',color:'var(--green)'})}
+  else if(txs>=5){score+=25;factors.push({label:'Moderate Activity',color:'var(--amber)'})}
+  else if(txs>=1){score+=10;factors.push({label:'Low Activity',color:'var(--amber)'})}
+  else{score+=0;factors.push({label:'No Activity',color:'var(--red)'})}
+  // recency factor (max 30)
+  if(lastTx){
+    const daysSince=(Date.now()-new Date(lastTx))/(1000*86400);
+    if(daysSince<=1){score+=30;factors.push({label:'Active Today',color:'var(--green)'})}
+    else if(daysSince<=3){score+=20;factors.push({label:'Active Recently',color:'var(--green)'})}
+    else if(daysSince<=7){score+=10;factors.push({label:'Active This Week',color:'var(--amber)'})}
+    else{score+=0;factors.push({label:'Inactive >7d',color:'var(--red)'})}
+  }
+  return {score,factors};
+}
+
+function renderHealth(score, factors){
+  const el=document.getElementById('healthNum');
+  const ring=document.getElementById('healthRing');
+  const circ=289;
+  const offset=circ-(circ*score/100);
+  const color=score>=70?'var(--green)':score>=40?'var(--amber)':'var(--red)';
+  ring.style.stroke=color;
+  ring.style.strokeDashoffset=offset;
+  el.textContent=score;
+  el.style.color=color;
+  const title=score>=70?'Node is Healthy':score>=40?'Node Needs Attention':'Node at Risk';
+  const sub=score>=70?'Your verifier node is performing well.':score>=40?'Some metrics need attention.':'Action required — check balance and activity.';
+  document.getElementById('healthTitle').textContent=title;
+  document.getElementById('healthSub').textContent=sub;
+  document.getElementById('healthFactors').innerHTML=factors.map(f=>`
+    <div class="hf"><span class="hf-dot" style="background:${f.color}"></span>${f.label}</div>`).join('');
+}
+
+/* ── uptime timeline ── */
+function renderTimeline(txs){
+  const now=Date.now();
+  const days=30;
+  const buckets=Array(days).fill(0);
+  txs.forEach(tx=>{
+    const ts=tx.block?.timestamp?new Date(tx.block.timestamp).getTime():0;
+    if(!ts) return;
+    const daysAgo=Math.floor((now-ts)/(1000*86400));
+    if(daysAgo>=0&&daysAgo<days) buckets[days-1-daysAgo]++;
+  });
+  const max=Math.max(...buckets,1);
+  const activeDays=buckets.filter(b=>b>0).length;
+  const upPct=Math.round((activeDays/days)*100);
+
+  document.getElementById('tlBars').innerHTML=buckets.map((b,i)=>{
+    const h=Math.max(4,Math.round((b/max)*36));
+    const color=b===0?'var(--s3)':b>=3?'var(--green)':'var(--gold)';
+    const d=new Date(now-(days-1-i)*86400000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    return `<div class="tl-bar" style="height:${h}px;background:${color}" data-tip="${d}: ${b} tx"></div>`;
+  }).join('');
+
+  document.getElementById('uptimePct').textContent=upPct+'%';
+  document.getElementById('uptimeVal').textContent=upPct+'%';
+  document.getElementById('activeDays').textContent=activeDays+' / 30';
+
+  // gaps
+  const times=txs.map(t=>t.block?.timestamp?new Date(t.block.timestamp).getTime():0).filter(Boolean).sort((a,b)=>a-b);
+  if(times.length>1){
+    const gaps=[];
+    for(let i=1;i<times.length;i++) gaps.push((times[i]-times[i-1])/(1000*3600));
+    const avgH=gaps.reduce((a,b)=>a+b,0)/gaps.length;
+    const maxH=Math.max(...gaps);
+    document.getElementById('avgGap').textContent=avgH<1?Math.round(avgH*60)+'m':avgH.toFixed(1)+'h';
+    document.getElementById('longestGap').textContent=maxH<24?maxH.toFixed(1)+'h':(maxH/24).toFixed(1)+'d';
+    document.getElementById('tlEstimate').textContent='~'+upPct+'% uptime estimated';
+  } else {
+    document.getElementById('avgGap').textContent='—';
+    document.getElementById('longestGap').textContent='—';
   }
 }
 
-function disconnect(){
-  evmAddr=''; evmSign='';
-  document.getElementById('wChip').style.display='none';
-  document.getElementById('connectScreen').style.display='flex';
-  document.getElementById('mainDash').style.display='none';
-  hs();
-  document.getElementById('connectBtn').disabled=false;
-}
+/* ── alerts ── */
+function checkAlerts(){
+  if(!STATE.balNum&&STATE.balNum!==0){
+    document.getElementById('alertStatus').textContent='Load a dashboard first.';
+    return;
+  }
+  const balThreshold=parseFloat(document.getElementById('alBal').value)||10;
+  const gapThreshold=parseFloat(document.getElementById('alGap').value)||7;
+  const alerts=[];
 
-/* ── API calls ── */
-async function cysicGet(path){
-  const r=await fetch(API+path,{headers:{'x-cysic-address':evmAddr,'x-cysic-sign':evmSign,'accept':'application/json'}});
-  if(!r.ok) throw new Error('HTTP '+r.status);
-  return r.json();
-}
+  if(STATE.balNum<balThreshold)
+    alerts.push(`Balance (${STATE.balNum.toFixed(2)} CYS) is below threshold (${balThreshold} CYS)`);
 
-async function gqlQuery(queries){
-  const r=await fetch(GQL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(queries)});
-  if(!r.ok) throw new Error('Hasura HTTP '+r.status);
-  return r.json();
+  if(STATE.lastTx){
+    const daysSince=(Date.now()-new Date(STATE.lastTx))/(1000*86400);
+    if(daysSince>gapThreshold)
+      alerts.push(`No transaction in ${daysSince.toFixed(1)} days (threshold: ${gapThreshold} days)`);
+  }
+
+  const banner=document.getElementById('alertBanner');
+  const okBanner=document.getElementById('alertOkBanner');
+  if(alerts.length){
+    document.getElementById('alertMsg').textContent=alerts.join(' · ');
+    banner.className='alert-active show';
+    okBanner.className='alert-ok';
+    document.getElementById('alertStatus').innerHTML=alerts.map(a=>`<div style="margin-bottom:6px;color:var(--red)">⚠️ ${a}</div>`).join('');
+  } else {
+    banner.className='alert-active';
+    okBanner.className='alert-ok show';
+    document.getElementById('alertOkMsg').textContent='All checks passed. Node looks healthy!';
+    document.getElementById('alertStatus').innerHTML='<span style="color:var(--green)">✅ All checks passed.</span>';
+  }
 }
 
 /* ── main load ── */
 async function loadAll(){
-  ss('Loading data...','loading');
+  const addr=document.getElementById('addrIn').value.trim();
+  if(!addr||!addr.startsWith('cysic1')){
+    ss('Please enter a valid address starting with cysic1','error');
+    return;
+  }
+  localStorage.setItem('cysic_addr',addr);
+  document.getElementById('loadBtn').disabled=true;
+  document.getElementById('mainDash').style.display='none';
+  ss('Querying Cysic chain...','loading');
+
   try {
-    // fire all requests in parallel
-    const [overRes, taskRes] = await Promise.all([
-      cysicGet('/user/overview'),
-      cysicGet('/zkTask/verifier/taskList?pageNum=0&pageSize=10')
-    ]);
+    const results=await fetch(GQL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify([
+      {operationName:'Bal',variables:{address:addr},query:'query Bal($address:String!){accountBalances:action_account_balance(address:$address){coins}}'},
+      {operationName:'Staked',variables:{address:addr},query:'query Staked($address:String!){delegationBalance:action_delegation_total(address:$address){coins}}'},
+      {operationName:'Unbond',variables:{address:addr},query:'query Unbond($address:String!){unbondingBalance:action_unbonding_delegation_total(address:$address){coins}}'},
+      {operationName:'Rewards',variables:{address:addr},query:'query Rewards($address:String!){delegationRewards:action_delegation_reward(address:$address){validatorAddress:validator_address coins}}'},
+      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${addr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
+    ])}).then(r=>r.json());
 
-    if(overRes.code!==0) throw new Error(overRes.msg||'API error');
-    const d=overRes.data, zk=d.zkPart;
+    const bal=results[0]?.data?.accountBalances?.coins||[];
+    const staked=results[1]?.data?.delegationBalance?.coins||[];
+    const unbond=results[2]?.data?.unbondingBalance?.coins||[];
+    const delRewards=results[3]?.data?.delegationRewards||[];
+    const txRaw=(results[4]?.data?.messagesByAddress||[]).map(m=>m.transaction).filter(Boolean);
 
-    /* — profile — */
-    document.getElementById('pAvatar').src=d.userProfile?.avatarUrl||'';
-    document.getElementById('pName').textContent=d.userProfile?.name||'Unknown';
-    document.getElementById('pAddr').textContent=evmAddr;
+    // state
+    const balNum=bal.length?parseFloat(bal[0].amount)/1e18:0;
+    const lastTx=txRaw.length?txRaw[0].block?.timestamp:null;
+    STATE={balNum,lastTx,txs:txRaw,addr};
 
-    const stdOn=zk.verifierStatus?.standardActive===1;
-    const mobOn=zk.verifierStatus?.mobileActive===1;
-    document.getElementById('pStatus').innerHTML=`
-      <div class="status-row"><span class="sdot ${stdOn?'on':'off'}"></span><span style="color:${stdOn?'var(--green)':'var(--muted)'}">Standard ${stdOn?'Active':'Inactive'}</span></div>
-      <div class="status-row"><span class="sdot ${mobOn?'on':'off'}"></span><span style="color:${mobOn?'var(--green)':'var(--muted)'}">Mobile ${mobOn?'Active':'Inactive'}</span></div>`;
+    // health
+    const {score,factors}=calcHealth(balNum,txRaw.length,lastTx);
+    renderHealth(score,factors);
 
-    /* — cards — */
-    const rewardCYS=d.rewardList?.find(r=>r.symbol==='CYS')?.amount||'0';
-    document.getElementById('cRewards').textContent=parseFloat(rewardCYS).toFixed(4)+' CYS';
-    document.getElementById('cTasks').textContent=(zk.verifierTaskCompletedCnt||0).toLocaleString();
-    document.getElementById('cNFT').textContent=(d.nftCnt||0).toString();
-    const multi=zk.multiplierFire||0;
-    document.getElementById('cMulti').textContent=multi>0?'🔥 x'+multi:'—';
+    // overview cards
+    document.getElementById('cBal').textContent=(balNum).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    let totalR=0;
+    delRewards.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
+    document.getElementById('cStakeR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    document.getElementById('cStaked').textContent=fmtCoin(staked);
+    document.getElementById('cTxCount').textContent=txRaw.length+(txRaw.length>=50?'+':'');
+    document.getElementById('cLastAct').textContent=lastTx?fmtDate(lastTx):'No txs';
 
-    /* — last approved task — */
-    const tasks=taskRes.data?.list||[];
-    const lastTask=tasks.find(t=>t.verifyResult===1);
-    if(lastTask){
-      document.getElementById('lastTaskBadge').textContent='#'+lastTask.taskId;
-      document.getElementById('lastTaskBody').innerHTML=`
-        <div class="lt-row">
-          <span class="lt-label">Task Hash</span>
-          <a class="lt-val link hl" href="https://explorer.cysic.xyz/transactions/${lastTask.taskHash}" target="_blank">${short(lastTask.taskHash,12,8)}</a>
-        </div>
-        <hr class="divider"/>
-        <div class="lt-row">
-          <span class="lt-label">Reward</span>
-          <span class="lt-val green">${parseFloat(lastTask.rewardCYS).toFixed(6)} CYS</span>
-        </div>
-        <hr class="divider"/>
-        <div class="lt-row">
-          <span class="lt-label">Verifier (Worker)</span>
-          <span class="lt-val">${short(lastTask.verifier,8,6)}</span>
-        </div>
-        <hr class="divider"/>
-        <div class="lt-row">
-          <span class="lt-label">Started</span>
-          <span class="lt-val">${fmtTs(lastTask.startAt)}</span>
-        </div>
-        <div class="lt-row">
-          <span class="lt-label">Finished</span>
-          <span class="lt-val">${fmtTs(lastTask.finishAt)}</span>
-        </div>
-        <hr class="divider"/>
-        <div class="lt-row">
-          <span class="lt-label">Result</span>
-          <span class="badge ok">PASS</span>
-        </div>`;
-    }
+    // tx table
+    document.getElementById('txBadge').textContent=txRaw.length;
+    const tb=document.getElementById('txTable');
+    tb.innerHTML=txRaw.length?txRaw.slice(0,20).map(tx=>{
+      const type=(tx.messages?.[0]?.['@type']||'').split('.').pop()||'—';
+      return`<tr>
+        <td><a class="hl" href="https://explorer.cysic.xyz/transactions/${tx.hash}" target="_blank">${short(tx.hash)}</a></td>
+        <td style="color:var(--muted);font-size:11px">${type}</td>
+        <td style="font-family:var(--mono);font-size:11px;color:var(--muted)">${tx.height||'—'}</td>
+        <td style="font-size:11px;color:var(--muted)">${tx.block?.timestamp?fmtDate(tx.block.timestamp):'—'}</td>
+        <td><span class="badge ${tx.success?'ok':'fail'}">${tx.success?'OK':'FAIL'}</span></td>
+      </tr>`;
+    }).join(''):'<tr class="empty"><td colspan="5">No transactions found</td></tr>';
 
-    /* — Cosmos via Hasura — */
-    // need cysic1 address — derive from overview or ask separately
-    // for now load with evmAddr mapped if available, fallback gracefully
-    const cysicAddr=d.userProfile?.cysicAddress||'';
-    if(cysicAddr){
-      await loadCosmos(cysicAddr);
-    } else {
-      document.getElementById('cosBalance').textContent='—';
-      document.getElementById('cosRewards').textContent='—';
-      document.getElementById('txBadge').textContent='0';
-      document.getElementById('txTable').innerHTML='<tr class="empty"><td colspan="5">Cosmos address not linked</td></tr>';
-    }
+    // uptime
+    renderTimeline(txRaw);
+
+    // cosmos tab
+    document.getElementById('cosAvail').textContent=fmtCoin(bal);
+    document.getElementById('cosStaked').textContent=fmtCoin(staked);
+    document.getElementById('cosDelR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    document.getElementById('cosUnbond').textContent=fmtCoin(unbond);
+    document.getElementById('valCount').textContent=delRewards.length;
+    document.getElementById('valList').innerHTML=delRewards.length?
+      delRewards.map(r=>`
+        <div style="display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(28,42,56,.5);gap:12px;font-size:12px">
+          <span style="font-family:var(--mono);font-size:11px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.validatorAddress}</span>
+          <span style="font-family:var(--mono);color:var(--green);font-weight:600">${fmtAllCoins(r.coins)}</span>
+        </div>`).join('')
+      :'<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px">No delegation rewards</div>';
+
+    // alerts auto-check
+    checkAlerts();
 
     document.getElementById('mainDash').style.display='block';
     ss('Loaded · '+new Date().toLocaleTimeString(),'ok');
     setTimeout(hs,4000);
-
   } catch(e){
     ss('Error: '+e.message,'error');
+  } finally {
+    document.getElementById('loadBtn').disabled=false;
   }
 }
 
-async function loadCosmos(addr){
-  try {
-    const results=await gqlQuery([
-      {operationName:'AccountBalances',variables:{address:addr},
-       query:'query AccountBalances($address:String!){accountBalances:action_account_balance(address:$address){coins}}'},
-      {operationName:'AccountDelegationRewards',variables:{address:addr},
-       query:'query AccountDelegationRewards($address:String!){delegationRewards:action_delegation_reward(address:$address){coins}}'},
-      {operationName:'GetMessagesByAddress',variables:{limit:10,offset:0,types:'{}',address:`{${addr}}`},
-       query:'query GetMessagesByAddress($address:_text,$limit:bigint=10,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
-    ]);
-
-    const bal=results[0]?.data?.accountBalances?.coins||[];
-    const rewardList=results[1]?.data?.delegationRewards||[];
-    const txs=(results[2]?.data?.messagesByAddress||[]).map(m=>m.transaction).filter(Boolean);
-
-    document.getElementById('cosBalance').textContent=fmtCoin(bal);
-
-    let totalR=0;
-    rewardList.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
-    document.getElementById('cosRewards').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
-
-    document.getElementById('txBadge').textContent=txs.length;
-    const tb=document.getElementById('txTable');
-    if(!txs.length){
-      tb.innerHTML='<tr class="empty"><td colspan="5">No transactions found</td></tr>';
-    } else {
-      tb.innerHTML=txs.map(tx=>{
-        const type=(tx.messages?.[0]?.['@type']||'').split('.').pop()||'—';
-        return `<tr>
-          <td><a class="hl" href="https://explorer.cysic.xyz/transactions/${tx.hash}" target="_blank">${short(tx.hash,8,6)}</a></td>
-          <td style="font-size:11px;color:var(--muted)">${type}</td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--muted)">${tx.height||'—'}</td>
-          <td style="font-size:11px;color:var(--muted)">${tx.block?.timestamp?new Date(tx.block.timestamp).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}):'—'}</td>
-          <td><span class="badge ${tx.success?'ok':'fail'}">${tx.success?'OK':'FAIL'}</span></td>
-        </tr>`;
-      }).join('');
-    }
-  } catch(e){
-    document.getElementById('cosBalance').textContent='Error';
-    console.error('Cosmos error:',e);
-  }
-}
+// restore last address
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved=localStorage.getItem('cysic_addr');
+  if(saved) document.getElementById('addrIn').value=saved;
+  document.getElementById('addrIn').addEventListener('keydown',e=>{if(e.key==='Enter')loadAll();});
+});
 </script>
 </body>
 </html>
