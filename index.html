@@ -6,383 +6,231 @@
 <title>Cysic Worker Dashboard</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #080c10;
-    --surface: #0e1419;
-    --surface2: #141c24;
-    --border: #1e2d3d;
-    --accent: #00d4ff;
-    --accent2: #7c3aed;
-    --green: #00e676;
-    --amber: #ffb300;
-    --red: #ff5252;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Inter', sans-serif;
+    --bg: #080c10; --surface: #0e1419; --surface2: #141c24;
+    --border: #1e2d3d; --accent: #00d4ff; --accent2: #7c3aed;
+    --green: #00e676; --amber: #ffb300; --red: #ff5252;
+    --text: #e2e8f0; --muted: #64748b;
+    --mono: 'JetBrains Mono', monospace; --sans: 'Inter', sans-serif;
   }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    min-height: 100vh;
-    padding: 0;
-  }
+  .header { border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; background: var(--surface); }
+  .logo { width: 30px; height: 30px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 14px; flex-shrink: 0; }
+  .header-title { font-size: 14px; font-weight: 600; }
+  .header-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .badge-net { font-family: var(--mono); font-size: 10px; padding: 3px 8px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); border-radius: 20px; color: var(--accent); }
+  .wallet-chip { font-family: var(--mono); font-size: 11px; padding: 4px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; display: flex; align-items: center; gap: 6px; }
+  .wdot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .btn-dis { font-size: 11px; color: var(--muted); background: none; border: none; cursor: pointer; }
+  .btn-dis:hover { color: var(--red); }
 
-  /* Header */
-  .header {
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: var(--surface);
-  }
-  .header-logo {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 700; color: #fff;
-    flex-shrink: 0;
-  }
-  .header-title { font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
-  .header-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
-  .header-right { margin-left: auto; }
-  .network-badge {
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 4px 10px;
-    background: rgba(0, 212, 255, 0.08);
-    border: 1px solid rgba(0, 212, 255, 0.2);
-    border-radius: 20px;
-    color: var(--accent);
-  }
+  /* CONNECT */
+  .connect-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 62px); padding: 2rem; text-align: center; }
+  .connect-icon { font-size: 52px; margin-bottom: 1.5rem; }
+  .connect-title { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+  .connect-sub { font-size: 14px; color: var(--muted); margin-bottom: 2rem; max-width: 380px; line-height: 1.7; }
+  .btn-connect { padding: 13px 30px; background: var(--accent); border: none; border-radius: 10px; color: #000; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: opacity 0.15s; }
+  .btn-connect:hover { opacity: 0.85; }
+  .btn-connect:disabled { opacity: 0.4; cursor: not-allowed; }
+  .connect-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
 
-  /* Search */
-  .search-wrap {
-    padding: 2rem 2rem 1rem;
-    max-width: 900px;
-  }
-  .search-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .search-row { display: flex; gap: 8px; }
-  .search-row input {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-row input:focus { border-color: var(--accent); }
-  .search-row input::placeholder { color: var(--muted); }
-  .btn {
-    padding: 10px 20px;
-    background: var(--accent);
-    border: none;
-    border-radius: 8px;
-    color: #000;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.15s;
-  }
-  .btn:hover { opacity: 0.85; }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* Status bar */
-  .status-bar {
-    margin: 0 2rem 1.5rem;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    display: none;
-    align-items: center;
-    gap: 8px;
-  }
-  .status-bar.show { display: flex; }
-  .status-bar.loading { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2); color: var(--accent); }
-  .status-bar.error { background: rgba(255,82,82,0.07); border: 1px solid rgba(255,82,82,0.2); color: var(--red); }
-  .status-bar.ok { background: rgba(0,230,118,0.07); border: 1px solid rgba(0,230,118,0.2); color: var(--green); }
-  .spinner {
-    width: 14px; height: 14px;
-    border: 2px solid rgba(0,212,255,0.3);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    flex-shrink: 0;
-  }
+  /* STATUS */
+  .status-wrap { padding: 0 2rem; }
+  .sbar { padding: 10px 14px; border-radius: 8px; font-size: 13px; display: none; align-items: center; gap: 8px; margin: 1rem 0; }
+  .sbar.show { display: flex; }
+  .sbar.loading { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2); color: var(--accent); }
+  .sbar.error { background: rgba(255,82,82,0.07); border: 1px solid rgba(255,82,82,0.2); color: var(--red); }
+  .sbar.ok { background: rgba(0,230,118,0.07); border: 1px solid rgba(0,230,118,0.2); color: var(--green); }
+  .spinner { width: 13px; height: 13px; border: 2px solid rgba(0,212,255,0.3); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Main grid */
-  .main { padding: 0 2rem 3rem; max-width: 900px; }
+  /* MAIN */
+  .main { padding: 1.5rem 2rem 3rem; max-width: 900px; display: none; }
 
-  /* Stat cards */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-    margin-bottom: 1.5rem;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent-color, var(--accent));
-    opacity: 0.6;
-  }
-  .card.green::before { --accent-color: var(--green); }
-  .card.amber::before { --accent-color: var(--amber); }
-  .card.purple::before { --accent-color: var(--accent2); }
-  .card-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-  .card-value {
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1;
-  }
-  .card-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+  /* PROFILE */
+  .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 16px; }
+  .avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); background: var(--surface2); flex-shrink: 0; }
+  .profile-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .profile-addr { font-family: var(--mono); font-size: 11px; color: var(--muted); word-break: break-all; }
+  .profile-right { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .status-row { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .sdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .sdot.on { background: var(--green); box-shadow: 0 0 5px var(--green); }
+  .sdot.off { background: var(--muted); }
 
-  /* Section */
-  .section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-  }
-  .section-head {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    font-weight: 500;
-  }
-  .section-count {
-    margin-left: auto;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    background: var(--surface2);
-    padding: 2px 8px;
-    border-radius: 10px;
-  }
-  .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-  .dot.green { background: var(--green); }
-  .dot.amber { background: var(--amber); }
-  .dot.purple { background: var(--accent2); }
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.25rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--cc, var(--accent)); }
+  .card.g { --cc: var(--green); } .card.a { --cc: var(--amber); } .card.p { --cc: var(--accent2); } .card.r { --cc: var(--red); }
+  .clabel { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .cval { font-family: var(--mono); font-size: 20px; font-weight: 600; line-height: 1; }
+  .csub { font-size: 11px; color: var(--muted); margin-top: 5px; }
 
-  /* Table */
+  /* SECTION */
+  .section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.25rem; overflow: hidden; }
+  .sec-head { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .sec-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 500; }
+  .sec-badge { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 10px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .dot.g { background: var(--green); } .dot.a { background: var(--amber); }
+
+  /* LAST TASK */
+  .last-task { padding: 1.25rem 1.5rem; }
+  .lt-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+  .lt-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .lt-val { font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .lt-val.green { color: var(--green); font-weight: 600; }
+  .lt-val.link { color: var(--accent); text-decoration: none; font-size: 12px; }
+  .lt-val.link:hover { text-decoration: underline; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 5px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
+  .badge.ok { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+  .badge.fail { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.25); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+
+  /* COSMOS */
+  .cosmos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .cosmos-item { padding: 14px 16px; border-right: 1px solid var(--border); }
+  .cosmos-item:last-child { border-right: none; }
+  .cosmos-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  .cosmos-val { font-family: var(--mono); font-size: 15px; font-weight: 600; }
+
+  /* TX TABLE */
   table { width: 100%; border-collapse: collapse; }
-  th {
-    padding: 10px 16px;
-    text-align: left;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    font-weight: 500;
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-  }
-  td {
-    padding: 11px 16px;
-    font-size: 13px;
-    border-bottom: 1px solid rgba(30,45,61,0.5);
-    vertical-align: middle;
-  }
+  th { padding: 9px 14px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); background: var(--surface2); border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; font-size: 12px; border-bottom: 1px solid rgba(30,45,61,0.5); }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: rgba(255,255,255,0.02); }
+  a.hl { font-family: var(--mono); font-size: 11px; color: var(--accent); text-decoration: none; }
+  a.hl:hover { text-decoration: underline; }
+  .empty td { text-align: center; color: var(--muted); padding: 1.5rem; }
 
-  .hash-link {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    text-decoration: none;
+  @media (max-width: 600px) {
+    .header { padding: 1rem; }
+    .main { padding: 1rem 1rem 2rem; }
+    .cosmos-grid { grid-template-columns: 1fr; }
+    .cosmos-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .profile-right { display: none; }
   }
-  .hash-link:hover { text-decoration: underline; }
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 500;
-    font-family: var(--mono);
-  }
-  .badge-ok { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.2); }
-  .badge-fail { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.2); }
-  .badge-type {
-    background: rgba(0,212,255,0.08);
-    color: var(--accent);
-    border: 1px solid rgba(0,212,255,0.15);
-    font-size: 10px;
-    padding: 2px 6px;
-  }
-
-  .empty-row td {
-    text-align: center;
-    color: var(--muted);
-    padding: 2rem;
-    font-size: 13px;
-  }
-
-  /* Address display */
-  .addr-bar {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .addr-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0; }
-  .addr-val { font-family: var(--mono); font-size: 12px; color: var(--text); word-break: break-all; }
-
-  /* Rewards list */
-  .reward-row {
-    display: flex;
-    align-items: center;
-    padding: 11px 16px;
-    border-bottom: 1px solid rgba(30,45,61,0.5);
-    gap: 12px;
-    font-size: 13px;
-  }
-  .reward-row:last-child { border-bottom: none; }
-  .reward-validator { font-family: var(--mono); font-size: 11px; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .reward-amount { font-family: var(--mono); font-size: 13px; color: var(--green); font-weight: 600; }
-
-  #dashboard { display: none; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="header-logo">C</div>
+  <div class="logo">C</div>
   <div>
     <div class="header-title">Cysic Worker Dashboard</div>
-    <div class="header-sub">Cosmos chain · cysicmint_4399-1 · <span id="ver"></span></div>
+    <div class="header-sub">v2.1.0 · cysicmint_4399-1</div>
   </div>
   <div class="header-right">
-    <span class="network-badge">Mainnet</span>
+    <span class="badge-net">Mainnet</span>
+    <div id="wChip" style="display:none" class="wallet-chip">
+      <span class="wdot"></span>
+      <span id="wAddr">—</span>
+      <button class="btn-dis" onclick="disconnect()">✕</button>
+    </div>
   </div>
 </div>
 
-<div class="search-wrap">
-  <div class="search-label">Keplr / Worker Address (cysic1...)</div>
-  <div class="search-row">
-    <input type="text" id="addrInput" placeholder="cysic1..." spellcheck="false" />
-    <button class="btn" id="loadBtn" onclick="loadAll()">Load</button>
+<!-- Connect screen -->
+<div id="connectScreen" class="connect-screen">
+  <div class="connect-icon">⚡</div>
+  <div class="connect-title">Cysic Worker Dashboard</div>
+  <div class="connect-sub">Connect your MetaMask wallet to view your verifier node stats, task history, and rewards.</div>
+  <button class="btn-connect" id="connectBtn" onclick="connectWallet()">
+    <span>🦊</span> Connect MetaMask
+  </button>
+  <div class="connect-note">Signs a message only — no transaction, no gas.</div>
+</div>
+
+<div class="status-wrap">
+  <div id="sbar" class="sbar">
+    <div id="spin" class="spinner"></div>
+    <span id="smsg"></span>
   </div>
 </div>
 
-<div id="statusBar" class="status-bar">
-  <div class="spinner" id="spinner"></div>
-  <span id="statusMsg">Loading...</span>
-</div>
+<div class="main" id="mainDash">
 
-<div class="main" id="dashboard">
-
-  <div class="addr-bar">
-    <span class="addr-label">Address</span>
-    <span class="addr-val" id="addrDisplay">—</span>
+  <!-- Profile -->
+  <div class="profile-card">
+    <img class="avatar" id="pAvatar" src="" alt=""
+      onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 52 52%22><rect width=%2252%22 height=%2252%22 fill=%22%23141c24%22 rx=%2226%22/><text x=%2226%22 y=%2233%22 text-anchor=%22middle%22 font-size=%2222%22>👤</text></svg>'" />
+    <div>
+      <div class="profile-name" id="pName">—</div>
+      <div class="profile-addr" id="pAddr">—</div>
+    </div>
+    <div class="profile-right" id="pStatus"></div>
   </div>
 
+  <!-- Summary cards -->
   <div class="cards">
+    <div class="card g">
+      <div class="clabel">Task Rewards</div>
+      <div class="cval" id="cRewards">—</div>
+      <div class="csub">CYS earned from tasks</div>
+    </div>
+    <div class="card a">
+      <div class="clabel">Tasks Verified</div>
+      <div class="cval" id="cTasks">—</div>
+      <div class="csub">Total completed</div>
+    </div>
+    <div class="card p">
+      <div class="clabel">NFTs</div>
+      <div class="cval" id="cNFT">—</div>
+      <div class="csub">Attached multiplier</div>
+    </div>
     <div class="card">
-      <div class="card-label">Available Balance</div>
-      <div class="card-value" id="balAvail">—</div>
-      <div class="card-sub">CYS liquid</div>
-    </div>
-    <div class="card green">
-      <div class="card-label">Delegation Rewards</div>
-      <div class="card-value" id="balRewards">—</div>
-      <div class="card-sub">Unclaimed CYS</div>
-    </div>
-    <div class="card amber">
-      <div class="card-label">Staked</div>
-      <div class="card-value" id="balStaked">—</div>
-      <div class="card-sub">Delegated CYS</div>
-    </div>
-    <div class="card purple">
-      <div class="card-label">Unbonding</div>
-      <div class="card-value" id="balUnbonding">—</div>
-      <div class="card-sub">Releasing CYS</div>
+      <div class="clabel">Multiplier</div>
+      <div class="cval" id="cMulti">—</div>
+      <div class="csub">Current boost</div>
     </div>
   </div>
 
-  <!-- Delegation Rewards breakdown -->
-  <div class="section" id="rewardsSection">
-    <div class="section-head">
-      <div class="dot green"></div>
-      <div class="section-title">Delegation Rewards by Validator</div>
-      <div class="section-count" id="rewardsCount">0</div>
-    </div>
-    <div id="rewardsList"></div>
-  </div>
-
-  <!-- Transaction history -->
+  <!-- Last approved task -->
   <div class="section">
-    <div class="section-head">
+    <div class="sec-head">
+      <div class="dot g"></div>
+      <div class="sec-title">Last Approved Task</div>
+      <div id="lastTaskBadge" class="sec-badge">—</div>
+    </div>
+    <div class="last-task" id="lastTaskBody">
+      <div style="color:var(--muted);font-size:13px;text-align:center;padding:1rem">No task data</div>
+    </div>
+  </div>
+
+  <!-- Cosmos balance -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="dot a"></div>
+      <div class="sec-title">Cosmos Chain · Balances</div>
+    </div>
+    <div class="cosmos-grid">
+      <div class="cosmos-item">
+        <div class="cosmos-label">Available CYS</div>
+        <div class="cosmos-val" id="cosBalance">—</div>
+      </div>
+      <div class="cosmos-item">
+        <div class="cosmos-label">Staking Rewards</div>
+        <div class="cosmos-val" id="cosRewards">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent tx -->
+  <div class="section">
+    <div class="sec-head">
       <div class="dot"></div>
-      <div class="section-title">Transaction History</div>
-      <div class="section-count" id="txCount">0</div>
+      <div class="sec-title">Recent Transactions</div>
+      <div class="sec-badge" id="txBadge">0</div>
     </div>
     <div style="overflow-x:auto">
       <table>
         <thead>
-          <tr>
-            <th>Hash</th>
-            <th>Type</th>
-            <th>Height</th>
-            <th>Time</th>
-            <th>Status</th>
-          </tr>
+          <tr><th>Hash</th><th>Type</th><th>Height</th><th>Time</th><th>Status</th></tr>
         </thead>
         <tbody id="txTable"></tbody>
       </table>
@@ -392,179 +240,211 @@
 </div>
 
 <script>
-const GQL = 'https://hasura.cysic.xyz/v1/graphql';
-const VERSION = 'v1.2.0';
+const API     = 'https://api.cysic.xyz/api/v1';
+const GQL     = 'https://hasura.cysic.xyz/v1/graphql';
+const SIGN_MSG = 'Welcome to Cysic Dashboard';
 
-function getDenom(denom) {
-  // Cysic returns plain "CYS"/"CGT" but amounts are in atto (1e18)
-  return 1e18;
+let evmAddr = '', evmSign = '';
+
+/* ── helpers ── */
+function short(a, s=6, e=4) { return a ? a.slice(0,s)+'...'+a.slice(-e) : '—'; }
+function fmtTs(ts) {
+  if (!ts) return '—';
+  const d = new Date(parseInt(ts)*1000);
+  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+       +' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+function getDenom(d){ return 1e18; }
+function fmtCoin(coins){
+  if(!coins||!coins.length) return '0 CYS';
+  const c=coins[0];
+  return (parseFloat(c.amount)/getDenom(c.denom)).toLocaleString('en',{maximumFractionDigits:4})+' '+(c.denom||'CYS').toUpperCase();
 }
 
-async function gql(queries) {
-  const res = await fetch(GQL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(Array.isArray(queries) ? queries : [queries])
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+/* ── status bar ── */
+function ss(msg, type){
+  const b=document.getElementById('sbar');
+  b.className='sbar show '+type;
+  document.getElementById('smsg').textContent=msg;
+  document.getElementById('spin').style.display=type==='loading'?'block':'none';
 }
+function hs(){ document.getElementById('sbar').className='sbar'; }
 
-function setStatus(msg, type) {
-  const bar = document.getElementById('statusBar');
-  const sp = document.getElementById('spinner');
-  bar.className = 'status-bar show ' + type;
-  document.getElementById('statusMsg').textContent = msg;
-  sp.style.display = type === 'loading' ? 'block' : 'none';
-}
-
-function cleanDenom(d) {
-  return (d || 'CYS').toUpperCase();
-}
-
-function fmtCoins(coins) {
-  if (!coins || !Array.isArray(coins) || coins.length === 0) return '0 CYS';
-  const c = coins[0];
-  const amt = parseFloat(c.amount) / getDenom(c.denom);
-  return amt.toLocaleString('en', { maximumFractionDigits: 4 }) + ' ' + cleanDenom(c.denom);
-}
-
-function fmtRaw(coins) {
-  if (!coins || !Array.isArray(coins) || coins.length === 0) return '0 CYS';
-  return coins.map(c => {
-    const amt = parseFloat(c.amount) / getDenom(c.denom);
-    return amt.toLocaleString('en', { maximumFractionDigits: 4 }) + ' ' + cleanDenom(c.denom);
-  }).join(' · ');
-}
-
-function shortHash(h) {
-  if (!h) return '—';
-  return h.slice(0, 10) + '...' + h.slice(-8);
-}
-
-function fmtDate(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) +
-    ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-}
-
-function getMsgType(messages) {
-  if (!messages || messages.length === 0) return '—';
-  const m = messages[0];
-  const t = m['@type'] || m.type || '';
-  return t.split('.').pop() || t;
-}
-
-async function loadAll() {
-  const addr = document.getElementById('addrInput').value.trim();
-  if (!addr || !addr.startsWith('cysic1')) {
-    setStatus('Please enter a valid Cysic address starting with cysic1', 'error');
-    document.getElementById('statusBar').className = 'status-bar show error';
-    document.getElementById('spinner').style.display = 'none';
-    return;
-  }
-
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('loadBtn').disabled = true;
-  setStatus('Connecting to Hasura GraphQL...', 'loading');
-
-  const valAddr = addr.replace('cysic1', 'cysicvaloper1');
-
+/* ── wallet ── */
+async function connectWallet(){
+  if(!window.ethereum){ ss('MetaMask not found. Please install it.','error'); return; }
+  const btn=document.getElementById('connectBtn');
+  btn.disabled=true;
+  ss('Requesting wallet access...','loading');
   try {
-    const results = await gql([
-      { operationName: 'AccountBalances', variables: { address: addr },
-        query: 'query AccountBalances($address: String!) { accountBalances: action_account_balance(address: $address) { coins __typename } }' },
-      { operationName: 'AccountDelegationBalance', variables: { address: addr },
-        query: 'query AccountDelegationBalance($address: String!) { delegationBalance: action_delegation_total(address: $address) { coins __typename } }' },
-      { operationName: 'AccountUnbondingBalance', variables: { address: addr },
-        query: 'query AccountUnbondingBalance($address: String!) { unbondingBalance: action_unbonding_delegation_total(address: $address) { coins __typename } }' },
-      { operationName: 'AccountDelegationRewards', variables: { address: addr },
-        query: 'query AccountDelegationRewards($address: String!) { delegationRewards: action_delegation_reward(address: $address) { validatorAddress: validator_address coins __typename } }' },
-      { operationName: 'GetMessagesByAddress', variables: { limit: 51, offset: 0, types: '{}', address: `{${addr}}` },
-        query: 'query GetMessagesByAddress($address: _text, $limit: bigint = 50, $offset: bigint = 0, $types: _text = "{}") { messagesByAddress: messages_by_address(args: {addresses: $address, types: $types, limit: $limit, offset: $offset}) { transaction { height hash success messages logs block { height timestamp __typename } __typename } __typename } }' }
+    const accounts=await window.ethereum.request({method:'eth_requestAccounts'});
+    evmAddr=accounts[0];
+    ss('Signing authentication message...','loading');
+    evmSign=await window.ethereum.request({method:'personal_sign',params:[SIGN_MSG,evmAddr]});
+    document.getElementById('wAddr').textContent=short(evmAddr);
+    document.getElementById('wChip').style.display='flex';
+    document.getElementById('connectScreen').style.display='none';
+    await loadAll();
+  } catch(e){
+    ss('Error: '+(e.message||'Rejected'),'error');
+    btn.disabled=false;
+  }
+}
+
+function disconnect(){
+  evmAddr=''; evmSign='';
+  document.getElementById('wChip').style.display='none';
+  document.getElementById('connectScreen').style.display='flex';
+  document.getElementById('mainDash').style.display='none';
+  hs();
+  document.getElementById('connectBtn').disabled=false;
+}
+
+/* ── API calls ── */
+async function cysicGet(path){
+  const r=await fetch(API+path,{headers:{'x-cysic-address':evmAddr,'x-cysic-sign':evmSign,'accept':'application/json'}});
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}
+
+async function gqlQuery(queries){
+  const r=await fetch(GQL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(queries)});
+  if(!r.ok) throw new Error('Hasura HTTP '+r.status);
+  return r.json();
+}
+
+/* ── main load ── */
+async function loadAll(){
+  ss('Loading data...','loading');
+  try {
+    // fire all requests in parallel
+    const [overRes, taskRes] = await Promise.all([
+      cysicGet('/user/overview'),
+      cysicGet('/zkTask/verifier/taskList?pageNum=0&pageSize=10')
     ]);
 
-    const balData    = results[0]?.data?.accountBalances?.coins || [];
+    if(overRes.code!==0) throw new Error(overRes.msg||'API error');
+    const d=overRes.data, zk=d.zkPart;
 
+    /* — profile — */
+    document.getElementById('pAvatar').src=d.userProfile?.avatarUrl||'';
+    document.getElementById('pName').textContent=d.userProfile?.name||'Unknown';
+    document.getElementById('pAddr').textContent=evmAddr;
 
-    const stakedData = results[1]?.data?.delegationBalance?.coins || [];
-    const unbondData = results[2]?.data?.unbondingBalance?.coins || [];
-    const rewardsData = results[3]?.data?.delegationRewards || [];
-    const txData     = results[4]?.data?.messagesByAddress || [];
+    const stdOn=zk.verifierStatus?.standardActive===1;
+    const mobOn=zk.verifierStatus?.mobileActive===1;
+    document.getElementById('pStatus').innerHTML=`
+      <div class="status-row"><span class="sdot ${stdOn?'on':'off'}"></span><span style="color:${stdOn?'var(--green)':'var(--muted)'}">Standard ${stdOn?'Active':'Inactive'}</span></div>
+      <div class="status-row"><span class="sdot ${mobOn?'on':'off'}"></span><span style="color:${mobOn?'var(--green)':'var(--muted)'}">Mobile ${mobOn?'Active':'Inactive'}</span></div>`;
 
-    // Total rewards across all validators
-    let totalRewardAmt = 0;
-    rewardsData.forEach(r => {
-      if (r.coins) r.coins.forEach(c => { totalRewardAmt += parseFloat(c.amount || 0); });
-    });
-    const totalRewardStr = (totalRewardAmt / 1e18).toLocaleString('en', { maximumFractionDigits: 4 }) + ' CYS';
+    /* — cards — */
+    const rewardCYS=d.rewardList?.find(r=>r.symbol==='CYS')?.amount||'0';
+    document.getElementById('cRewards').textContent=parseFloat(rewardCYS).toFixed(4)+' CYS';
+    document.getElementById('cTasks').textContent=(zk.verifierTaskCompletedCnt||0).toLocaleString();
+    document.getElementById('cNFT').textContent=(d.nftCnt||0).toString();
+    const multi=zk.multiplierFire||0;
+    document.getElementById('cMulti').textContent=multi>0?'🔥 x'+multi:'—';
 
-    // Fill cards
-    document.getElementById('addrDisplay').textContent = addr;
-    document.getElementById('balAvail').textContent = fmtRaw(balData);
-    document.getElementById('balRewards').textContent = totalRewardStr;
-    document.getElementById('balStaked').textContent = fmtRaw(stakedData);
-    document.getElementById('balUnbonding').textContent = fmtRaw(unbondData);
-
-    // Rewards breakdown
-    document.getElementById('rewardsCount').textContent = rewardsData.length;
-    const rl = document.getElementById('rewardsList');
-    if (rewardsData.length === 0) {
-      rl.innerHTML = '<div class="reward-row"><span style="color:var(--muted);font-size:13px">No delegation rewards found</span></div>';
-    } else {
-      rl.innerHTML = rewardsData.map(r => `
-        <div class="reward-row">
-          <span class="reward-validator">${r.validatorAddress || '—'}</span>
-          <span class="reward-amount">${fmtRaw(r.coins)}</span>
-        </div>`).join('');
+    /* — last approved task — */
+    const tasks=taskRes.data?.list||[];
+    const lastTask=tasks.find(t=>t.verifyResult===1);
+    if(lastTask){
+      document.getElementById('lastTaskBadge').textContent='#'+lastTask.taskId;
+      document.getElementById('lastTaskBody').innerHTML=`
+        <div class="lt-row">
+          <span class="lt-label">Task Hash</span>
+          <a class="lt-val link hl" href="https://explorer.cysic.xyz/transactions/${lastTask.taskHash}" target="_blank">${short(lastTask.taskHash,12,8)}</a>
+        </div>
+        <hr class="divider"/>
+        <div class="lt-row">
+          <span class="lt-label">Reward</span>
+          <span class="lt-val green">${parseFloat(lastTask.rewardCYS).toFixed(6)} CYS</span>
+        </div>
+        <hr class="divider"/>
+        <div class="lt-row">
+          <span class="lt-label">Verifier (Worker)</span>
+          <span class="lt-val">${short(lastTask.verifier,8,6)}</span>
+        </div>
+        <hr class="divider"/>
+        <div class="lt-row">
+          <span class="lt-label">Started</span>
+          <span class="lt-val">${fmtTs(lastTask.startAt)}</span>
+        </div>
+        <div class="lt-row">
+          <span class="lt-label">Finished</span>
+          <span class="lt-val">${fmtTs(lastTask.finishAt)}</span>
+        </div>
+        <hr class="divider"/>
+        <div class="lt-row">
+          <span class="lt-label">Result</span>
+          <span class="badge ok">PASS</span>
+        </div>`;
     }
 
-    // Transactions
-    const txs = txData.map(m => m.transaction).filter(Boolean);
-    document.getElementById('txCount').textContent = txs.length + (txs.length >= 50 ? '+' : '');
-    const tb = document.getElementById('txTable');
-    if (txs.length === 0) {
-      tb.innerHTML = '<tr class="empty-row"><td colspan="5">No transactions found for this address</td></tr>';
+    /* — Cosmos via Hasura — */
+    // need cysic1 address — derive from overview or ask separately
+    // for now load with evmAddr mapped if available, fallback gracefully
+    const cysicAddr=d.userProfile?.cysicAddress||'';
+    if(cysicAddr){
+      await loadCosmos(cysicAddr);
     } else {
-      tb.innerHTML = txs.map(tx => {
-        const hash = tx.hash || '';
-        const type = getMsgType(tx.messages);
-        const ts = tx.block?.timestamp || '';
+      document.getElementById('cosBalance').textContent='—';
+      document.getElementById('cosRewards').textContent='—';
+      document.getElementById('txBadge').textContent='0';
+      document.getElementById('txTable').innerHTML='<tr class="empty"><td colspan="5">Cosmos address not linked</td></tr>';
+    }
+
+    document.getElementById('mainDash').style.display='block';
+    ss('Loaded · '+new Date().toLocaleTimeString(),'ok');
+    setTimeout(hs,4000);
+
+  } catch(e){
+    ss('Error: '+e.message,'error');
+  }
+}
+
+async function loadCosmos(addr){
+  try {
+    const results=await gqlQuery([
+      {operationName:'AccountBalances',variables:{address:addr},
+       query:'query AccountBalances($address:String!){accountBalances:action_account_balance(address:$address){coins}}'},
+      {operationName:'AccountDelegationRewards',variables:{address:addr},
+       query:'query AccountDelegationRewards($address:String!){delegationRewards:action_delegation_reward(address:$address){coins}}'},
+      {operationName:'GetMessagesByAddress',variables:{limit:10,offset:0,types:'{}',address:`{${addr}}`},
+       query:'query GetMessagesByAddress($address:_text,$limit:bigint=10,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
+    ]);
+
+    const bal=results[0]?.data?.accountBalances?.coins||[];
+    const rewardList=results[1]?.data?.delegationRewards||[];
+    const txs=(results[2]?.data?.messagesByAddress||[]).map(m=>m.transaction).filter(Boolean);
+
+    document.getElementById('cosBalance').textContent=fmtCoin(bal);
+
+    let totalR=0;
+    rewardList.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
+    document.getElementById('cosRewards').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+
+    document.getElementById('txBadge').textContent=txs.length;
+    const tb=document.getElementById('txTable');
+    if(!txs.length){
+      tb.innerHTML='<tr class="empty"><td colspan="5">No transactions found</td></tr>';
+    } else {
+      tb.innerHTML=txs.map(tx=>{
+        const type=(tx.messages?.[0]?.['@type']||'').split('.').pop()||'—';
         return `<tr>
-          <td><a class="hash-link" href="https://explorer.cysic.xyz/transactions/${hash}" target="_blank">${shortHash(hash)}</a></td>
-          <td><span class="badge badge-type">${type}</span></td>
-          <td style="font-family:var(--mono);font-size:12px;color:var(--muted)">${tx.height || '—'}</td>
-          <td style="font-size:12px;color:var(--muted)">${fmtDate(ts)}</td>
-          <td><span class="badge ${tx.success ? 'badge-ok' : 'badge-fail'}">${tx.success ? 'OK' : 'FAIL'}</span></td>
+          <td><a class="hl" href="https://explorer.cysic.xyz/transactions/${tx.hash}" target="_blank">${short(tx.hash,8,6)}</a></td>
+          <td style="font-size:11px;color:var(--muted)">${type}</td>
+          <td style="font-family:var(--mono);font-size:11px;color:var(--muted)">${tx.height||'—'}</td>
+          <td style="font-size:11px;color:var(--muted)">${tx.block?.timestamp?new Date(tx.block.timestamp).toLocaleDateString('en-GB',{day:'2-digit',month:'short'}):'—'}</td>
+          <td><span class="badge ${tx.success?'ok':'fail'}">${tx.success?'OK':'FAIL'}</span></td>
         </tr>`;
       }).join('');
     }
-
-    setStatus('Data loaded from Cysic Hasura · ' + new Date().toLocaleTimeString(), 'ok');
-    document.getElementById('dashboard').style.display = 'block';
-
-  } catch (err) {
-    setStatus('Error: ' + err.message, 'error');
-    document.getElementById('spinner').style.display = 'none';
-  } finally {
-    document.getElementById('loadBtn').disabled = false;
+  } catch(e){
+    document.getElementById('cosBalance').textContent='Error';
+    console.error('Cosmos error:',e);
   }
 }
-
-// Pre-fill and auto-load if address in URL hash
-window.addEventListener('DOMContentLoaded', () => {
-  const hash = window.location.hash.slice(1);
-  if (hash && hash.startsWith('cysic1')) {
-    document.getElementById('addrInput').value = hash;
-    loadAll();
-  }
-  // Enter key support
-  document.getElementById('ver').textContent = VERSION;
-  document.getElementById('addrInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') loadAll();
-  });
-});
 </script>
 </body>
 </html>
