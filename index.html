@@ -8,46 +8,42 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#07090c;
-  --s1:#0d1117;
-  --s2:#111820;
-  --s3:#161f2a;
-  --border:#1c2a38;
-  --gold:#c9a84c;
-  --gold2:#e8c87a;
-  --green:#00e676;
-  --cyan:#00d4ff;
-  --red:#ff5252;
-  --amber:#ffb300;
-  --purple:#7c3aed;
-  --text:#e8edf2;
-  --muted:#4a6070;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'Inter',sans-serif;
+  --bg:#07090c;--s1:#0d1117;--s2:#111820;--s3:#161f2a;
+  --border:#1c2a38;--gold:#c9a84c;--gold2:#e8c87a;
+  --green:#00e676;--cyan:#00d4ff;--red:#ff5252;--amber:#ffb300;--purple:#7c3aed;
+  --text:#e8edf2;--muted:#4a6070;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
 
 /* HEADER */
-.header{background:linear-gradient(180deg,#0d1117 0%,#0a0f15 100%);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;height:60px;gap:1rem;position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:0.05em;color:var(--gold2)}
+.header{background:var(--s1);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;height:60px;gap:1rem;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:.05em;color:var(--gold2)}
 .logo-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--gold),#8b6914);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#000}
-.header-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.net-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:20px;color:var(--gold)}
-.ver-badge{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.net-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:20px;color:var(--gold)}
+.ver{font-family:var(--mono);font-size:10px;color:var(--muted)}
 
-/* INPUT SECTION */
-.input-wrap{padding:2rem 2rem 0;max-width:1000px}
-.input-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px}
-.input-row{display:flex;gap:8px;flex-wrap:wrap}
-.addr-input{flex:1;min-width:280px;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none;transition:border-color .2s}
+/* SETUP SCREEN */
+.setup{max-width:560px;margin:4rem auto;padding:0 1.5rem}
+.setup-title{font-size:22px;font-weight:700;color:var(--gold2);margin-bottom:6px}
+.setup-sub{font-size:13px;color:var(--muted);margin-bottom:2rem;line-height:1.6}
+.input-group{margin-bottom:14px}
+.input-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.input-tag{font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600}
+.tag-base{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
+.tag-cosmos{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.tag-worker{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2)}
+.addr-input{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;transition:border-color .2s}
 .addr-input:focus{border-color:var(--gold)}
 .addr-input::placeholder{color:var(--muted)}
-.btn-load{padding:10px 22px;background:linear-gradient(135deg,var(--gold),#8b6914);border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.btn-load{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),#8b6914);border:none;border-radius:8px;color:#000;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .15s}
 .btn-load:hover{opacity:.85}
 .btn-load:disabled{opacity:.4;cursor:not-allowed}
+.setup-note{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6}
 
 /* STATUS */
-.sbar{margin:1rem 2rem 0;padding:10px 14px;border-radius:8px;font-size:13px;display:none;align-items:center;gap:8px;max-width:1000px}
+.sbar{padding:10px 14px;border-radius:8px;font-size:13px;display:none;align-items:center;gap:8px;margin:1rem 0;max-width:560px}
 .sbar.show{display:flex}
 .sbar.loading{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);color:var(--cyan)}
 .sbar.error{background:rgba(255,82,82,.07);border:1px solid rgba(255,82,82,.2);color:var(--red)}
@@ -58,31 +54,35 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 /* MAIN */
 .main{padding:1.5rem 2rem 4rem;max-width:1000px;display:none}
 
-/* HEALTH SCORE */
+/* ADDR BAR */
+.addr-bar{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.addr-item{display:flex;align-items:center;gap:6px;font-size:11px}
+.addr-val{font-family:var(--mono);font-size:11px;color:var(--text)}
+.btn-reset{margin-left:auto;font-size:11px;padding:5px 12px;background:var(--s2);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer}
+.btn-reset:hover{color:var(--text)}
+
+/* HEALTH */
 .health-wrap{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .health-score-wrap{position:relative;width:110px;height:110px;flex-shrink:0}
 .health-ring{transform:rotate(-90deg)}
-.health-ring-bg{fill:none;stroke:var(--s3);stroke-width:8}
-.health-ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s ease}
+.ring-bg{fill:none;stroke:var(--s3);stroke-width:8}
+.ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.2s ease}
 .health-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.health-num .score{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1}
-.health-num .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
-.health-info{flex:1}
-.health-title{font-size:16px;font-weight:600;margin-bottom:6px}
-.health-sub{font-size:13px;color:var(--muted);line-height:1.6}
-.health-factors{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-.hf{display:flex;align-items:center;gap:5px;font-size:12px;padding:4px 10px;background:var(--s2);border-radius:20px;border:1px solid var(--border)}
-.hf-dot{width:6px;height:6px;border-radius:50%}
+.h-score{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1}
+.h-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.health-info{flex:1;min-width:200px}
+.health-title{font-size:16px;font-weight:600;margin-bottom:5px}
+.health-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.factors{display:flex;gap:8px;flex-wrap:wrap}
+.factor{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;background:var(--s2);border-radius:20px;border:1px solid var(--border)}
+.fdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 
 /* TABS */
 .tabs{display:flex;gap:2px;margin-bottom:1.25rem;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:4px}
 .tab{flex:1;padding:9px;text-align:center;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-radius:8px;transition:all .2s;border:none;background:none}
 .tab:hover{color:var(--text)}
 .tab.active{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));color:var(--gold2);border:1px solid rgba(201,168,76,.2)}
-
-/* TAB PANELS */
-.panel{display:none}
-.panel.active{display:block}
+.panel{display:none}.panel.active{display:block}
 
 /* CARDS */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:1.25rem}
@@ -101,6 +101,28 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
 .dot.g{background:var(--green)}.dot.c{background:var(--cyan)}.dot.r{background:var(--red)}.dot.a{background:var(--amber)}
 
+/* NFT GRID */
+.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;padding:1.25rem}
+.nft-card{background:var(--s2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s}
+.nft-card:hover{border-color:var(--gold)}
+.nft-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--s3)}
+.nft-info{padding:8px 10px}
+.nft-name{font-size:12px;font-weight:600;margin-bottom:3px}
+.nft-id{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.nft-tier{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;margin-top:4px}
+.tier-1{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
+.tier-2{background:rgba(201,168,76,.1);color:var(--gold2);border:1px solid rgba(201,168,76,.2)}
+.tier-3{background:rgba(124,58,237,.1);color:#a78bfa;border:1px solid rgba(124,58,237,.2)}
+.tier-4{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
+.nft-empty{padding:2rem;text-align:center;color:var(--muted);font-size:13px}
+
+/* MULTIPLIER BAR */
+.multi-wrap{padding:1rem 1.25rem;border-top:1px solid var(--border)}
+.multi-label{font-size:11px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.multi-bar-bg{height:8px;background:var(--s3);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.multi-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--green));transition:width 1s ease}
+.multi-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+
 /* TABLE */
 table{width:100%;border-collapse:collapse}
 th{padding:9px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--s2);border-bottom:1px solid var(--border)}
@@ -114,450 +136,472 @@ a.hl:hover{text-decoration:underline}
 .badge.fail{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
 .empty td{text-align:center;color:var(--muted);padding:2rem}
 
-/* UPTIME TIMELINE */
-.timeline-wrap{padding:1rem 1.5rem}
-.tl-label{font-size:11px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
-.tl-bars{display:flex;gap:3px;align-items:flex-end;height:40px}
-.tl-bar{flex:1;border-radius:3px;min-height:4px;transition:height .3s ease;cursor:pointer;position:relative}
-.tl-bar:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#1c2a38;border:1px solid var(--border);padding:4px 8px;border-radius:5px;font-size:10px;white-space:nowrap;color:var(--text);z-index:10}
-.tl-stats{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted)}
+/* UPTIME */
+.tl-bars{display:flex;gap:3px;align-items:flex-end;height:40px;padding:1rem 1.25rem 0}
+.tl-bar{flex:1;border-radius:3px;min-height:4px;position:relative;cursor:pointer}
+.tl-bar:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--s3);border:1px solid var(--border);padding:4px 8px;border-radius:5px;font-size:10px;white-space:nowrap;color:var(--text);z-index:10}
+.tl-stats{display:flex;justify-content:space-between;padding:.5rem 1.25rem 1rem;font-size:11px;color:var(--muted)}
 
 /* ALERTS */
-.alert-wrap{padding:1rem 1.5rem}
-.alert-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.alert-input{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;width:120px}
+.alert-wrap{padding:1.25rem}
+.alert-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.alert-input{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;width:110px}
 .alert-input:focus{border-color:var(--gold)}
-.alert-label{font-size:12px;color:var(--muted);flex:1}
-.btn-set{padding:6px 14px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);border-radius:6px;color:var(--gold2);font-size:12px;cursor:pointer}
-.btn-set:hover{background:rgba(201,168,76,.25)}
-.alert-active{padding:10px 14px;background:rgba(255,82,82,.08);border:1px solid rgba(255,82,82,.2);border-radius:8px;font-size:13px;color:var(--red);display:none;align-items:center;gap:8px;margin-bottom:10px}
-.alert-active.show{display:flex}
-.alert-ok{padding:10px 14px;background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);border-radius:8px;font-size:13px;color:var(--green);display:none;align-items:center;gap:8px;margin-bottom:10px}
-.alert-ok.show{display:flex}
+.alert-lbl{font-size:12px;color:var(--muted);flex:1}
+.btn-check{padding:8px 18px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:6px;color:var(--gold2);font-size:12px;font-weight:600;cursor:pointer;margin-top:4px}
+.btn-check:hover{background:rgba(201,168,76,.2)}
+.alert-banner{padding:10px 14px;border-radius:8px;font-size:13px;display:none;align-items:center;gap:8px;margin-bottom:10px}
+.alert-banner.show{display:flex}
+.alert-banner.warn{background:rgba(255,82,82,.07);border:1px solid rgba(255,82,82,.2);color:var(--red)}
+.alert-banner.good{background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);color:var(--green)}
 
-/* COSMOS GRID */
-.cg{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
-.cg-item{padding:14px 16px;border-right:1px solid var(--border)}
+/* COSMOS */
+.cg{display:grid;grid-template-columns:1fr 1fr}
+.cg-item{padding:14px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
 .cg-item:nth-child(even){border-right:none}
+.cg-item:nth-last-child(-n+2){border-bottom:none}
 .cg-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px}
 .cg-val{font-family:var(--mono);font-size:14px;font-weight:600}
 
 @media(max-width:600px){
-  .header{padding:0 1rem}
-  .main,.input-wrap{padding-left:1rem;padding-right:1rem}
+  .header,.main{padding-left:1rem;padding-right:1rem}
+  .setup{padding:0 1rem;margin-top:2rem}
   .cg{grid-template-columns:1fr}
-  .cg-item{border-right:none;border-bottom:1px solid var(--border)}
+  .cg-item{border-right:none}
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">
-    <div class="logo-icon">C</div>
-    CYSIC
-  </div>
-  <span style="font-size:12px;color:var(--muted);font-weight:400">Worker Dashboard</span>
+  <div class="logo"><div class="logo-icon">C</div>CYSIC</div>
+  <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver-badge">v3.0.0</span>
+    <span class="ver">v4.0.0</span>
   </div>
 </div>
 
-<div class="input-wrap">
-  <div class="input-label">Keplr Address (cysic1...)</div>
-  <div class="input-row">
-    <input class="addr-input" id="addrIn" placeholder="cysic1..." spellcheck="false"/>
+<!-- SETUP SCREEN -->
+<div id="setupScreen">
+  <div class="setup">
+    <div class="setup-title">⚡ Cysic Worker Dashboard</div>
+    <div class="setup-sub">Enter your three addresses to load your full node dashboard.</div>
+
+    <div id="setupSbar" class="sbar"></div>
+
+    <div class="input-group">
+      <div class="input-label"><span class="input-tag tag-base">BASE</span> EVM Address — for NFTs</div>
+      <input class="addr-input" id="inEVM" placeholder="0x..." spellcheck="false"/>
+    </div>
+    <div class="input-group">
+      <div class="input-label"><span class="input-tag tag-worker">WORKER</span> Worker Address — node health</div>
+      <input class="addr-input" id="inWorker" placeholder="0x..." spellcheck="false"/>
+    </div>
+    <div class="input-group">
+      <div class="input-label"><span class="input-tag tag-cosmos">COSMOS</span> Keplr Address — balance & staking</div>
+      <input class="addr-input" id="inKeplr" placeholder="cysic1..." spellcheck="false"/>
+    </div>
     <button class="btn-load" id="loadBtn" onclick="loadAll()">Load Dashboard</button>
+    <div class="setup-note">All data is fetched directly from public blockchain APIs.<br>Nothing is stored on any server.</div>
   </div>
 </div>
 
-<div id="sbar" class="sbar">
-  <div id="spin" class="spin"></div>
-  <span id="smsg"></span>
-</div>
-
+<!-- MAIN DASHBOARD -->
 <div class="main" id="mainDash">
 
-  <!-- Health Score -->
+  <!-- address bar -->
+  <div class="addr-bar">
+    <div class="addr-item"><span class="input-tag tag-base">BASE</span><span class="addr-val" id="dispEVM">—</span></div>
+    <div class="addr-item"><span class="input-tag tag-worker">WORKER</span><span class="addr-val" id="dispWorker">—</span></div>
+    <div class="addr-item"><span class="input-tag tag-cosmos">COSMOS</span><span class="addr-val" id="dispKeplr">—</span></div>
+    <button class="btn-reset" onclick="resetDash()">← Edit</button>
+  </div>
+
+  <!-- health -->
   <div class="health-wrap">
     <div class="health-score-wrap">
       <svg class="health-ring" width="110" height="110" viewBox="0 0 110 110">
-        <circle class="health-ring-bg" cx="55" cy="55" r="46"/>
-        <circle class="health-ring-fill" id="healthRing" cx="55" cy="55" r="46"
-          stroke-dasharray="289" stroke-dashoffset="289"/>
+        <circle class="ring-bg" cx="55" cy="55" r="46"/>
+        <circle class="ring-fill" id="healthRing" cx="55" cy="55" r="46" stroke-dasharray="289" stroke-dashoffset="289"/>
       </svg>
       <div class="health-num">
-        <div class="score" id="healthNum">0</div>
-        <div class="label">Health</div>
+        <div class="h-score" id="healthNum">0</div>
+        <div class="h-label">Health</div>
       </div>
     </div>
     <div class="health-info">
-      <div class="health-title" id="healthTitle">Node Health</div>
-      <div class="health-sub" id="healthSub">Loading node data...</div>
-      <div class="health-factors" id="healthFactors"></div>
+      <div class="health-title" id="healthTitle">Loading...</div>
+      <div class="health-sub" id="healthSub"></div>
+      <div class="factors" id="healthFactors"></div>
     </div>
   </div>
 
-  <!-- TABS -->
+  <!-- tabs -->
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('overview')">Overview</button>
-    <button class="tab" onclick="switchTab('uptime')">Uptime</button>
-    <button class="tab" onclick="switchTab('cosmos')">Cosmos Chain</button>
-    <button class="tab" onclick="switchTab('alerts')">Alerts</button>
+    <button class="tab active" onclick="sw('overview')">Overview</button>
+    <button class="tab" onclick="sw('nft')">NFTs</button>
+    <button class="tab" onclick="sw('uptime')">Uptime</button>
+    <button class="tab" onclick="sw('cosmos')">Cosmos</button>
+    <button class="tab" onclick="sw('alerts')">Alerts</button>
   </div>
 
-  <!-- OVERVIEW TAB -->
+  <!-- OVERVIEW -->
   <div class="panel active" id="tab-overview">
     <div class="cards">
-      <div class="card g">
-        <div class="clabel">CYS Balance</div>
-        <div class="cval" id="cBal">—</div>
-        <div class="csub">Available</div>
-      </div>
-      <div class="card c">
-        <div class="clabel">Staking Rewards</div>
-        <div class="cval" id="cStakeR">—</div>
-        <div class="csub">Unclaimed</div>
-      </div>
-      <div class="card a">
-        <div class="clabel">Staked</div>
-        <div class="cval" id="cStaked">—</div>
-        <div class="csub">Delegated CGT</div>
-      </div>
-      <div class="card p">
-        <div class="clabel">Total Txs</div>
-        <div class="cval" id="cTxCount">—</div>
-        <div class="csub">All time</div>
-      </div>
-      <div class="card">
-        <div class="clabel">Last Activity</div>
-        <div class="cval" id="cLastAct" style="font-size:13px">—</div>
-        <div class="csub">Most recent tx</div>
-      </div>
+      <div class="card g"><div class="clabel">CYS Balance</div><div class="cval" id="oBal">—</div><div class="csub">Available</div></div>
+      <div class="card c"><div class="clabel">Staking Rewards</div><div class="cval" id="oStakeR">—</div><div class="csub">Unclaimed</div></div>
+      <div class="card a"><div class="clabel">Staked</div><div class="cval" id="oStaked">—</div><div class="csub">Delegated</div></div>
+      <div class="card p"><div class="clabel">NFTs</div><div class="cval" id="oNFT">—</div><div class="csub">Cysic CUBE</div></div>
+      <div class="card"><div class="clabel">Last Activity</div><div class="cval" id="oLast" style="font-size:13px">—</div><div class="csub">Most recent tx</div></div>
     </div>
-
     <div class="sec">
-      <div class="sec-head">
-        <div class="dot g"></div>
-        <div class="sec-title">Recent Transactions</div>
-        <div class="sec-badge" id="txBadge">0</div>
-      </div>
+      <div class="sec-head"><div class="dot g"></div><div class="sec-title">Recent Transactions</div><div class="sec-badge" id="txBadge">0</div></div>
       <div style="overflow-x:auto">
-        <table>
-          <thead><tr><th>Hash</th><th>Type</th><th>Height</th><th>Date</th><th>Status</th></tr></thead>
-          <tbody id="txTable"></tbody>
-        </table>
+        <table><thead><tr><th>Hash</th><th>Type</th><th>Height</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody id="txTable"></tbody></table>
       </div>
     </div>
   </div>
 
-  <!-- UPTIME TAB -->
+  <!-- NFT -->
+  <div class="panel" id="tab-nft">
+    <div class="sec">
+      <div class="sec-head"><div class="dot" style="background:var(--gold)"></div><div class="sec-title">Cysic CUBE — NFTs on Base</div><div class="sec-badge" id="nftBadge">0</div></div>
+      <div id="nftGrid" class="nft-grid"></div>
+      <div class="multi-wrap">
+        <div class="multi-label">Multiplier Boost</div>
+        <div class="multi-bar-bg"><div class="multi-bar-fill" id="multiBar" style="width:0%"></div></div>
+        <div class="multi-info"><span>No boost</span><span id="multiVal">—</span><span>Max 1.2x</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPTIME -->
   <div class="panel" id="tab-uptime">
     <div class="sec">
-      <div class="sec-head">
-        <div class="dot c"></div>
-        <div class="sec-title">Activity Timeline</div>
-        <div class="sec-badge" id="uptimePct">—</div>
-      </div>
-      <div class="timeline-wrap">
-        <div class="tl-label">Last 30 days — bar height = activity level</div>
-        <div class="tl-bars" id="tlBars"></div>
-        <div class="tl-stats">
-          <span>30 days ago</span>
-          <span id="tlEstimate">Estimating uptime...</span>
-          <span>Today</span>
-        </div>
-      </div>
+      <div class="sec-head"><div class="dot c"></div><div class="sec-title">30-Day Activity Timeline</div><div class="sec-badge" id="uptimeBadge">—</div></div>
+      <div class="tl-bars" id="tlBars"></div>
+      <div class="tl-stats"><span>30 days ago</span><span id="tlEst">—</span><span>Today</span></div>
     </div>
-
     <div class="cards">
-      <div class="card c">
-        <div class="clabel">Est. Uptime</div>
-        <div class="cval" id="uptimeVal">—</div>
-        <div class="csub">Last 30 days</div>
-      </div>
-      <div class="card g">
-        <div class="clabel">Active Days</div>
-        <div class="cval" id="activeDays">—</div>
-        <div class="csub">Days with tx activity</div>
-      </div>
-      <div class="card a">
-        <div class="clabel">Avg Gap</div>
-        <div class="cval" id="avgGap">—</div>
-        <div class="csub">Between transactions</div>
-      </div>
-      <div class="card r">
-        <div class="clabel">Longest Gap</div>
-        <div class="cval" id="longestGap">—</div>
-        <div class="csub">Possible downtime</div>
-      </div>
+      <div class="card c"><div class="clabel">Est. Uptime</div><div class="cval" id="uUptime">—</div><div class="csub">Last 30 days</div></div>
+      <div class="card g"><div class="clabel">Active Days</div><div class="cval" id="uDays">—</div><div class="csub">Days with txs</div></div>
+      <div class="card a"><div class="clabel">Avg Gap</div><div class="cval" id="uAvgGap">—</div><div class="csub">Between txs</div></div>
+      <div class="card r"><div class="clabel">Longest Gap</div><div class="cval" id="uMaxGap">—</div><div class="csub">Possible downtime</div></div>
     </div>
   </div>
 
-  <!-- COSMOS TAB -->
+  <!-- COSMOS -->
   <div class="panel" id="tab-cosmos">
     <div class="sec">
-      <div class="sec-head">
-        <div class="dot a"></div>
-        <div class="sec-title">Chain Balances</div>
-      </div>
+      <div class="sec-head"><div class="dot a"></div><div class="sec-title">Chain Balances</div></div>
       <div class="cg">
-        <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cosAvail">—</div></div>
-        <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cosStaked">—</div></div>
-        <div class="cg-item"><div class="cg-label">Delegation Rewards</div><div class="cg-val" id="cosDelR">—</div></div>
-        <div class="cg-item"><div class="cg-label">Unbonding</div><div class="cg-val" id="cosUnbond">—</div></div>
+        <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cAvail">—</div></div>
+        <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cStaked">—</div></div>
+        <div class="cg-item"><div class="cg-label">Delegation Rewards</div><div class="cg-val" id="cDelR">—</div></div>
+        <div class="cg-item"><div class="cg-label">Unbonding</div><div class="cg-val" id="cUnbond">—</div></div>
       </div>
     </div>
-
     <div class="sec">
-      <div class="sec-head">
-        <div class="dot"></div>
-        <div class="sec-title">Delegation Rewards by Validator</div>
-        <div class="sec-badge" id="valCount">0</div>
-      </div>
+      <div class="sec-head"><div class="dot"></div><div class="sec-title">Rewards by Validator</div><div class="sec-badge" id="valBadge">0</div></div>
       <div id="valList"></div>
     </div>
   </div>
 
-  <!-- ALERTS TAB -->
+  <!-- ALERTS -->
   <div class="panel" id="tab-alerts">
     <div class="sec">
-      <div class="sec-head">
-        <div class="dot r"></div>
-        <div class="sec-title">Alert Thresholds</div>
-      </div>
+      <div class="sec-head"><div class="dot r"></div><div class="sec-title">Alert Thresholds</div></div>
       <div class="alert-wrap">
-        <div id="alertBanner" class="alert-active">⚠️ <span id="alertMsg"></span></div>
-        <div id="alertOkBanner" class="alert-ok">✅ <span id="alertOkMsg">Node is healthy</span></div>
-
+        <div id="alertWarn" class="alert-banner warn">⚠️ <span id="alertWarnMsg"></span></div>
+        <div id="alertGood" class="alert-banner good">✅ <span id="alertGoodMsg">All checks passed</span></div>
         <div class="alert-row">
-          <span class="alert-label">Warn if CYS balance drops below</span>
-          <input class="alert-input" id="alBal" type="number" placeholder="e.g. 10" value="10"/>
+          <span class="alert-lbl">Warn if CYS balance below</span>
+          <input class="alert-input" id="alBal" type="number" value="10"/>
           <span style="font-size:12px;color:var(--muted)">CYS</span>
         </div>
         <div class="alert-row">
-          <span class="alert-label">Warn if no transaction in last</span>
-          <input class="alert-input" id="alGap" type="number" placeholder="e.g. 7" value="7"/>
+          <span class="alert-lbl">Warn if no transaction in last</span>
+          <input class="alert-input" id="alGap" type="number" value="7"/>
           <span style="font-size:12px;color:var(--muted)">days</span>
         </div>
-        <button class="btn-set" onclick="checkAlerts()">Check Now</button>
-
-        <div style="margin-top:1.5rem">
-          <div class="sec-title" style="margin-bottom:10px">CURRENT STATUS</div>
-          <div id="alertStatus" style="font-size:13px;color:var(--muted)">Load a dashboard first.</div>
-        </div>
+        <button class="btn-check" onclick="checkAlerts()">Check Now</button>
+        <div style="margin-top:1.5rem;font-size:13px;color:var(--muted)" id="alertStatus">Load dashboard first.</div>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
-const GQL = 'https://hasura.cysic.xyz/v1/graphql';
-let STATE = {};
+const GQL='https://hasura.cysic.xyz/v1/graphql';
+const NFT_CONTRACT='0x03bea16696caa7c1948ecf83e9b251f41002fcf3';
+const BASE_RPC='https://mainnet.base.org';
+// NFT tiers by name
+const TIERS={
+  'Tesseract':{tier:1,multi:1.0,cls:'tier-1'},
+  'Monolith':{tier:2,multi:1.05,cls:'tier-2'},
+  'Allspark':{tier:3,multi:1.1,cls:'tier-3'},
+  'MotherBox':{tier:4,multi:1.2,cls:'tier-4'},
+};
+let STATE={};
 
-/* ── utils ── */
-function short(a,s=8,e=6){ return a?a.slice(0,s)+'...'+a.slice(-e):'—'; }
-function fmtDate(iso){
-  if(!iso) return '—';
-  const d=new Date(iso);
-  return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-}
-function fmtCoin(coins){
-  if(!coins||!coins.length) return '0';
-  const c=coins[0];
-  const amt=(parseFloat(c.amount)/1e18).toLocaleString('en',{maximumFractionDigits:4});
-  return amt+' '+(c.denom||'CYS').toUpperCase();
-}
-function fmtAllCoins(coins){
-  if(!coins||!coins.length) return '0 CYS';
-  return coins.map(c=>(parseFloat(c.amount)/1e18).toLocaleString('en',{maximumFractionDigits:4})+' '+c.denom.toUpperCase()).join(' · ');
-}
-function ss(msg,type){
-  const b=document.getElementById('sbar');
-  b.className='sbar show '+type;
-  document.getElementById('smsg').textContent=msg;
-  document.getElementById('spin').style.display=type==='loading'?'block':'none';
-}
-function hs(){document.getElementById('sbar').className='sbar';}
+/* utils */
+function short(a,s=6,e=4){return a?a.slice(0,s)+'...'+a.slice(-e):'—';}
+function fmtDate(iso){if(!iso)return'—';const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtCoin(coins){if(!coins||!coins.length)return'0';const c=coins[0];return(parseFloat(c.amount)/1e18).toLocaleString('en',{maximumFractionDigits:4})+' '+c.denom.toUpperCase();}
+function ss(msg,type,el='setupSbar'){const b=document.getElementById(el);b.className='sbar show '+type;b.innerHTML=(type==='loading'?'<div class="spin"></div>':'')+`<span>${msg}</span>`;}
+function hs(el='setupSbar'){document.getElementById(el).className='sbar';}
 
-/* ── tabs ── */
-function switchTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>{
-    const ids=['overview','uptime','cosmos','alerts'];
-    t.classList.toggle('active',ids[i]===id);
-  });
-  document.querySelectorAll('.panel').forEach(p=>{
-    p.classList.toggle('active',p.id==='tab-'+id);
-  });
+/* tabs */
+function sw(id){
+  const ids=['overview','nft','uptime','cosmos','alerts'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',ids[i]===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+id));
 }
 
-/* ── health score ── */
-function calcHealth(bal, txs, lastTx){
-  let score=0, factors=[];
-  // balance factor (max 30)
-  const balNum=parseFloat(bal)||0;
-  if(balNum>=100){score+=30;factors.push({label:'Balance OK',color:'var(--green)'})}
-  else if(balNum>=10){score+=20;factors.push({label:'Balance Low',color:'var(--amber)'})}
-  else{score+=5;factors.push({label:'Balance Critical',color:'var(--red)'})}
-  // activity factor (max 40)
-  if(txs>=20){score+=40;factors.push({label:'High Activity',color:'var(--green)'})}
-  else if(txs>=5){score+=25;factors.push({label:'Moderate Activity',color:'var(--amber)'})}
-  else if(txs>=1){score+=10;factors.push({label:'Low Activity',color:'var(--amber)'})}
-  else{score+=0;factors.push({label:'No Activity',color:'var(--red)'})}
-  // recency factor (max 30)
+/* reset */
+function resetDash(){
+  document.getElementById('mainDash').style.display='none';
+  document.getElementById('setupScreen').style.display='block';
+}
+
+/* health */
+function calcHealth(balNum,txCount,lastTx){
+  let score=0,factors=[];
+  if(balNum>=100){score+=30;factors.push({l:'Balance OK',c:'var(--green)'})}
+  else if(balNum>=10){score+=20;factors.push({l:'Balance Low',c:'var(--amber)'})}
+  else{score+=5;factors.push({l:'Balance Critical',c:'var(--red)'})}
+  if(txCount>=20){score+=40;factors.push({l:'High Activity',c:'var(--green)'})}
+  else if(txCount>=5){score+=25;factors.push({l:'Moderate Activity',c:'var(--amber)'})}
+  else if(txCount>=1){score+=10;factors.push({l:'Low Activity',c:'var(--amber)'})}
+  else{factors.push({l:'No Activity',c:'var(--red)'})}
   if(lastTx){
-    const daysSince=(Date.now()-new Date(lastTx))/(1000*86400);
-    if(daysSince<=1){score+=30;factors.push({label:'Active Today',color:'var(--green)'})}
-    else if(daysSince<=3){score+=20;factors.push({label:'Active Recently',color:'var(--green)'})}
-    else if(daysSince<=7){score+=10;factors.push({label:'Active This Week',color:'var(--amber)'})}
-    else{score+=0;factors.push({label:'Inactive >7d',color:'var(--red)'})}
+    const d=(Date.now()-new Date(lastTx))/(86400000);
+    if(d<=1){score+=30;factors.push({l:'Active Today',c:'var(--green)'})}
+    else if(d<=3){score+=20;factors.push({l:'Active Recently',c:'var(--green)'})}
+    else if(d<=7){score+=10;factors.push({l:'Active This Week',c:'var(--amber)'})}
+    else{factors.push({l:'Inactive >7d',c:'var(--red)'})}
   }
-  return {score,factors};
+  return{score:Math.min(score,100),factors};
 }
-
-function renderHealth(score, factors){
-  const el=document.getElementById('healthNum');
-  const ring=document.getElementById('healthRing');
-  const circ=289;
-  const offset=circ-(circ*score/100);
+function renderHealth(score,factors){
   const color=score>=70?'var(--green)':score>=40?'var(--amber)':'var(--red)';
+  const ring=document.getElementById('healthRing');
   ring.style.stroke=color;
-  ring.style.strokeDashoffset=offset;
-  el.textContent=score;
-  el.style.color=color;
-  const title=score>=70?'Node is Healthy':score>=40?'Node Needs Attention':'Node at Risk';
-  const sub=score>=70?'Your verifier node is performing well.':score>=40?'Some metrics need attention.':'Action required — check balance and activity.';
-  document.getElementById('healthTitle').textContent=title;
-  document.getElementById('healthSub').textContent=sub;
-  document.getElementById('healthFactors').innerHTML=factors.map(f=>`
-    <div class="hf"><span class="hf-dot" style="background:${f.color}"></span>${f.label}</div>`).join('');
+  ring.style.strokeDashoffset=289-(289*score/100);
+  document.getElementById('healthNum').textContent=score;
+  document.getElementById('healthNum').style.color=color;
+  document.getElementById('healthTitle').textContent=score>=70?'Node is Healthy':score>=40?'Needs Attention':'Node at Risk';
+  document.getElementById('healthSub').textContent=score>=70?'Your verifier is performing well.':score>=40?'Some metrics need attention.':'Check balance and activity.';
+  document.getElementById('healthFactors').innerHTML=factors.map(f=>`<div class="factor"><span class="fdot" style="background:${f.c}"></span>${f.l}</div>`).join('');
 }
 
-/* ── uptime timeline ── */
+/* uptime */
 function renderTimeline(txs){
-  const now=Date.now();
-  const days=30;
+  const now=Date.now(),days=30;
   const buckets=Array(days).fill(0);
   txs.forEach(tx=>{
     const ts=tx.block?.timestamp?new Date(tx.block.timestamp).getTime():0;
-    if(!ts) return;
-    const daysAgo=Math.floor((now-ts)/(1000*86400));
-    if(daysAgo>=0&&daysAgo<days) buckets[days-1-daysAgo]++;
+    if(!ts)return;
+    const da=Math.floor((now-ts)/86400000);
+    if(da>=0&&da<days)buckets[days-1-da]++;
   });
   const max=Math.max(...buckets,1);
   const activeDays=buckets.filter(b=>b>0).length;
-  const upPct=Math.round((activeDays/days)*100);
-
+  const pct=Math.round(activeDays/days*100);
   document.getElementById('tlBars').innerHTML=buckets.map((b,i)=>{
-    const h=Math.max(4,Math.round((b/max)*36));
-    const color=b===0?'var(--s3)':b>=3?'var(--green)':'var(--gold)';
+    const h=Math.max(4,Math.round(b/max*36));
+    const col=b===0?'var(--s3)':b>=3?'var(--green)':'var(--gold)';
     const d=new Date(now-(days-1-i)*86400000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
-    return `<div class="tl-bar" style="height:${h}px;background:${color}" data-tip="${d}: ${b} tx"></div>`;
+    return`<div class="tl-bar" style="height:${h}px;background:${col}" data-tip="${d}: ${b} tx"></div>`;
   }).join('');
-
-  document.getElementById('uptimePct').textContent=upPct+'%';
-  document.getElementById('uptimeVal').textContent=upPct+'%';
-  document.getElementById('activeDays').textContent=activeDays+' / 30';
-
-  // gaps
+  document.getElementById('uptimeBadge').textContent=pct+'%';
+  document.getElementById('uUptime').textContent=pct+'%';
+  document.getElementById('uDays').textContent=activeDays+'/30';
+  document.getElementById('tlEst').textContent='~'+pct+'% estimated uptime';
   const times=txs.map(t=>t.block?.timestamp?new Date(t.block.timestamp).getTime():0).filter(Boolean).sort((a,b)=>a-b);
   if(times.length>1){
-    const gaps=[];
-    for(let i=1;i<times.length;i++) gaps.push((times[i]-times[i-1])/(1000*3600));
-    const avgH=gaps.reduce((a,b)=>a+b,0)/gaps.length;
-    const maxH=Math.max(...gaps);
-    document.getElementById('avgGap').textContent=avgH<1?Math.round(avgH*60)+'m':avgH.toFixed(1)+'h';
-    document.getElementById('longestGap').textContent=maxH<24?maxH.toFixed(1)+'h':(maxH/24).toFixed(1)+'d';
-    document.getElementById('tlEstimate').textContent='~'+upPct+'% uptime estimated';
-  } else {
-    document.getElementById('avgGap').textContent='—';
-    document.getElementById('longestGap').textContent='—';
+    const gaps=[];for(let i=1;i<times.length;i++)gaps.push((times[i]-times[i-1])/3600000);
+    const avg=gaps.reduce((a,b)=>a+b,0)/gaps.length,mx=Math.max(...gaps);
+    document.getElementById('uAvgGap').textContent=avg<1?Math.round(avg*60)+'m':avg.toFixed(1)+'h';
+    document.getElementById('uMaxGap').textContent=mx<24?mx.toFixed(1)+'h':(mx/24).toFixed(1)+'d';
   }
 }
 
-/* ── alerts ── */
+/* NFT via Base RPC eth_call */
+async function loadNFTs(evmAddr){
+  try{
+    // balanceOf
+    const balResp=await fetch(BASE_RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      jsonrpc:'2.0',id:1,method:'eth_call',params:[{
+        to:NFT_CONTRACT,
+        data:'0x70a08231000000000000000000000000'+evmAddr.slice(2).toLowerCase().padStart(64,'0')
+      },'latest']
+    })});
+    const balData=await balResp.json();
+    const balance=parseInt(balData.result,16);
+    document.getElementById('oNFT').textContent=balance;
+    document.getElementById('nftBadge').textContent=balance;
+
+    if(balance===0){
+      document.getElementById('nftGrid').innerHTML='<div class="nft-empty">No Cysic CUBE NFTs found on Base for this address.</div>';
+      document.getElementById('multiBar').style.width='0%';
+      document.getElementById('multiVal').textContent='No boost';
+      return;
+    }
+
+    // tokenOfOwnerByIndex for each
+    const tokenIds=[];
+    for(let i=0;i<Math.min(balance,10);i++){
+      const r=await fetch(BASE_RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        jsonrpc:'2.0',id:i+10,method:'eth_call',params:[{
+          to:NFT_CONTRACT,
+          data:'0x2f745c59'+evmAddr.slice(2).toLowerCase().padStart(64,'0')+i.toString(16).padStart(64,'0')
+        },'latest']
+      })});
+      const rd=await r.json();
+      if(rd.result&&rd.result!=='0x')tokenIds.push(parseInt(rd.result,16));
+    }
+
+    // tokenURI for each
+    const nfts=[];
+    for(const tid of tokenIds){
+      try{
+        const r=await fetch(BASE_RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+          jsonrpc:'2.0',id:tid+100,method:'eth_call',params:[{
+            to:NFT_CONTRACT,
+            data:'0xc87b56dd'+tid.toString(16).padStart(64,'0')
+          },'latest']
+        })});
+        const rd=await r.json();
+        // decode ABI string
+        let uri='';
+        if(rd.result&&rd.result.length>130){
+          const hex=rd.result.slice(2);
+          const offset=parseInt(hex.slice(0,64),16)*2;
+          const len=parseInt(hex.slice(offset,offset+64),16)*2;
+          const strHex=hex.slice(offset+64,offset+64+len);
+          uri=decodeURIComponent(strHex.match(/.{2}/g).map(b=>('%'+b)).join(''));
+        }
+        // fetch metadata
+        let meta={name:'Token #'+tid,image:''};
+        if(uri.startsWith('http')){
+          const mResp=await fetch(uri.replace('ipfs://','https://ipfs.io/ipfs/')).catch(()=>null);
+          if(mResp&&mResp.ok)meta=await mResp.json().catch(()=>meta);
+        } else if(uri.startsWith('data:application/json')){
+          meta=JSON.parse(atob(uri.split(',')[1]));
+        }
+        nfts.push({id:tid,name:meta.name||'Token #'+tid,image:(meta.image||'').replace('ipfs://','https://ipfs.io/ipfs/'),uri});
+      }catch(e){nfts.push({id:tid,name:'Token #'+tid,image:''});}
+    }
+
+    // render
+    document.getElementById('nftGrid').innerHTML=nfts.map(n=>{
+      const tierName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';
+      const t=TIERS[tierName]||TIERS['Tesseract'];
+      return`<div class="nft-card">
+        ${n.image?`<img class="nft-img" src="${n.image}" alt="${n.name}" onerror="this.style.display='none'"/>`:`<div class="nft-img" style="display:flex;align-items:center;justify-content:center;font-size:28px">🧊</div>`}
+        <div class="nft-info">
+          <div class="nft-name">${n.name}</div>
+          <div class="nft-id">#${n.id}</div>
+          <span class="nft-tier ${t.cls}">Tier ${t.tier} · ${t.multi}x</span>
+        </div>
+      </div>`;
+    }).join('');
+
+    // multiplier — best NFT
+    let bestMulti=1.0;
+    nfts.forEach(n=>{
+      const tierName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';
+      const t=TIERS[tierName]||TIERS['Tesseract'];
+      if(t.multi>bestMulti)bestMulti=t.multi;
+    });
+    const pct=((bestMulti-1)/0.2)*100;
+    document.getElementById('multiBar').style.width=pct+'%';
+    document.getElementById('multiVal').textContent=bestMulti+'x boost';
+
+  }catch(e){
+    document.getElementById('nftGrid').innerHTML=`<div class="nft-empty">Could not load NFTs: ${e.message}</div>`;
+    console.error('NFT error:',e);
+  }
+}
+
+/* alerts */
 function checkAlerts(){
-  if(!STATE.balNum&&STATE.balNum!==0){
-    document.getElementById('alertStatus').textContent='Load a dashboard first.';
-    return;
-  }
-  const balThreshold=parseFloat(document.getElementById('alBal').value)||10;
-  const gapThreshold=parseFloat(document.getElementById('alGap').value)||7;
-  const alerts=[];
-
-  if(STATE.balNum<balThreshold)
-    alerts.push(`Balance (${STATE.balNum.toFixed(2)} CYS) is below threshold (${balThreshold} CYS)`);
-
-  if(STATE.lastTx){
-    const daysSince=(Date.now()-new Date(STATE.lastTx))/(1000*86400);
-    if(daysSince>gapThreshold)
-      alerts.push(`No transaction in ${daysSince.toFixed(1)} days (threshold: ${gapThreshold} days)`);
-  }
-
-  const banner=document.getElementById('alertBanner');
-  const okBanner=document.getElementById('alertOkBanner');
-  if(alerts.length){
-    document.getElementById('alertMsg').textContent=alerts.join(' · ');
-    banner.className='alert-active show';
-    okBanner.className='alert-ok';
-    document.getElementById('alertStatus').innerHTML=alerts.map(a=>`<div style="margin-bottom:6px;color:var(--red)">⚠️ ${a}</div>`).join('');
-  } else {
-    banner.className='alert-active';
-    okBanner.className='alert-ok show';
-    document.getElementById('alertOkMsg').textContent='All checks passed. Node looks healthy!';
+  if(STATE.balNum===undefined){document.getElementById('alertStatus').textContent='Load dashboard first.';return;}
+  const balT=parseFloat(document.getElementById('alBal').value)||10;
+  const gapT=parseFloat(document.getElementById('alGap').value)||7;
+  const warns=[];
+  if(STATE.balNum<balT)warns.push(`Balance ${STATE.balNum.toFixed(2)} CYS < ${balT} CYS threshold`);
+  if(STATE.lastTx){const d=(Date.now()-new Date(STATE.lastTx))/86400000;if(d>gapT)warns.push(`No tx in ${d.toFixed(1)} days (threshold: ${gapT}d)`);}
+  const wb=document.getElementById('alertWarn'),gb=document.getElementById('alertGood');
+  if(warns.length){
+    document.getElementById('alertWarnMsg').textContent=warns.join(' · ');
+    wb.className='alert-banner warn show';gb.className='alert-banner good';
+    document.getElementById('alertStatus').innerHTML=warns.map(w=>`<div style="color:var(--red);margin-bottom:5px">⚠️ ${w}</div>`).join('');
+  }else{
+    wb.className='alert-banner warn';gb.className='alert-banner good show';
+    document.getElementById('alertGoodMsg').textContent='All checks passed. Node looks healthy!';
     document.getElementById('alertStatus').innerHTML='<span style="color:var(--green)">✅ All checks passed.</span>';
   }
 }
 
-/* ── main load ── */
+/* MAIN LOAD */
 async function loadAll(){
-  const addr=document.getElementById('addrIn').value.trim();
-  if(!addr||!addr.startsWith('cysic1')){
-    ss('Please enter a valid address starting with cysic1','error');
-    return;
-  }
-  localStorage.setItem('cysic_addr',addr);
+  const evm=document.getElementById('inEVM').value.trim();
+  const worker=document.getElementById('inWorker').value.trim();
+  const keplr=document.getElementById('inKeplr').value.trim();
+
+  if(!evm||!evm.startsWith('0x')){ss('EVM address must start with 0x','error');return;}
+  if(!worker||!worker.startsWith('0x')){ss('Worker address must start with 0x','error');return;}
+  if(!keplr||!keplr.startsWith('cysic1')){ss('Keplr address must start with cysic1','error');return;}
+
+  // save
+  localStorage.setItem('c_evm',evm);
+  localStorage.setItem('c_worker',worker);
+  localStorage.setItem('c_keplr',keplr);
+
   document.getElementById('loadBtn').disabled=true;
-  document.getElementById('mainDash').style.display='none';
   ss('Querying Cysic chain...','loading');
 
-  try {
+  try{
+    // Hasura
     const results=await fetch(GQL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify([
-      {operationName:'Bal',variables:{address:addr},query:'query Bal($address:String!){accountBalances:action_account_balance(address:$address){coins}}'},
-      {operationName:'Staked',variables:{address:addr},query:'query Staked($address:String!){delegationBalance:action_delegation_total(address:$address){coins}}'},
-      {operationName:'Unbond',variables:{address:addr},query:'query Unbond($address:String!){unbondingBalance:action_unbonding_delegation_total(address:$address){coins}}'},
-      {operationName:'Rewards',variables:{address:addr},query:'query Rewards($address:String!){delegationRewards:action_delegation_reward(address:$address){validatorAddress:validator_address coins}}'},
-      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${addr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
+      {operationName:'Bal',variables:{address:keplr},query:'query Bal($address:String!){accountBalances:action_account_balance(address:$address){coins}}'},
+      {operationName:'Staked',variables:{address:keplr},query:'query Staked($address:String!){delegationBalance:action_delegation_total(address:$address){coins}}'},
+      {operationName:'Unbond',variables:{address:keplr},query:'query Unbond($address:String!){unbondingBalance:action_unbonding_delegation_total(address:$address){coins}}'},
+      {operationName:'Rewards',variables:{address:keplr},query:'query Rewards($address:String!){delegationRewards:action_delegation_reward(address:$address){validatorAddress:validator_address coins}}'},
+      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${keplr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
     ])}).then(r=>r.json());
 
     const bal=results[0]?.data?.accountBalances?.coins||[];
     const staked=results[1]?.data?.delegationBalance?.coins||[];
     const unbond=results[2]?.data?.unbondingBalance?.coins||[];
-    const delRewards=results[3]?.data?.delegationRewards||[];
+    const delR=results[3]?.data?.delegationRewards||[];
     const txRaw=(results[4]?.data?.messagesByAddress||[]).map(m=>m.transaction).filter(Boolean);
 
-    // state
     const balNum=bal.length?parseFloat(bal[0].amount)/1e18:0;
     const lastTx=txRaw.length?txRaw[0].block?.timestamp:null;
-    STATE={balNum,lastTx,txs:txRaw,addr};
+    STATE={balNum,lastTx,txs:txRaw};
 
     // health
     const {score,factors}=calcHealth(balNum,txRaw.length,lastTx);
     renderHealth(score,factors);
 
-    // overview cards
-    document.getElementById('cBal').textContent=(balNum).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
-    let totalR=0;
-    delRewards.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
-    document.getElementById('cStakeR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
-    document.getElementById('cStaked').textContent=fmtCoin(staked);
-    document.getElementById('cTxCount').textContent=txRaw.length+(txRaw.length>=50?'+':'');
-    document.getElementById('cLastAct').textContent=lastTx?fmtDate(lastTx):'No txs';
+    // addr bar
+    document.getElementById('dispEVM').textContent=short(evm);
+    document.getElementById('dispWorker').textContent=short(worker);
+    document.getElementById('dispKeplr').textContent=short(keplr,10,6);
 
-    // tx table
-    document.getElementById('txBadge').textContent=txRaw.length;
+    // overview
+    document.getElementById('oBal').textContent=balNum.toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    let totalR=0;delR.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
+    document.getElementById('oStakeR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    document.getElementById('oStaked').textContent=fmtCoin(staked);
+    document.getElementById('oLast').textContent=lastTx?fmtDate(lastTx):'No txs';
+    document.getElementById('txBadge').textContent=txRaw.length+(txRaw.length>=50?'+':'');
+
     const tb=document.getElementById('txTable');
     tb.innerHTML=txRaw.length?txRaw.slice(0,20).map(tx=>{
       const type=(tx.messages?.[0]?.['@type']||'').split('.').pop()||'—';
@@ -574,37 +618,45 @@ async function loadAll(){
     renderTimeline(txRaw);
 
     // cosmos tab
-    document.getElementById('cosAvail').textContent=fmtCoin(bal);
-    document.getElementById('cosStaked').textContent=fmtCoin(staked);
-    document.getElementById('cosDelR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
-    document.getElementById('cosUnbond').textContent=fmtCoin(unbond);
-    document.getElementById('valCount').textContent=delRewards.length;
-    document.getElementById('valList').innerHTML=delRewards.length?
-      delRewards.map(r=>`
-        <div style="display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(28,42,56,.5);gap:12px;font-size:12px">
-          <span style="font-family:var(--mono);font-size:11px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.validatorAddress}</span>
-          <span style="font-family:var(--mono);color:var(--green);font-weight:600">${fmtAllCoins(r.coins)}</span>
-        </div>`).join('')
+    document.getElementById('cAvail').textContent=fmtCoin(bal);
+    document.getElementById('cStaked').textContent=fmtCoin(staked);
+    document.getElementById('cDelR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    document.getElementById('cUnbond').textContent=fmtCoin(unbond);
+    document.getElementById('valBadge').textContent=delR.length;
+    document.getElementById('valList').innerHTML=delR.length?
+      delR.map(r=>`<div style="display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(28,42,56,.5);gap:12px;font-size:12px">
+        <span style="font-family:var(--mono);font-size:11px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.validatorAddress}</span>
+        <span style="font-family:var(--mono);color:var(--green);font-weight:600">${fmtCoin(r.coins)}</span>
+      </div>`).join('')
       :'<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px">No delegation rewards</div>';
 
-    // alerts auto-check
+    // alerts
     checkAlerts();
 
+    // show dashboard
+    document.getElementById('setupScreen').style.display='none';
     document.getElementById('mainDash').style.display='block';
-    ss('Loaded · '+new Date().toLocaleTimeString(),'ok');
-    setTimeout(hs,4000);
-  } catch(e){
+    hs();
+
+    // load NFTs async (takes longer)
+    ss('Loading NFTs from Base chain...','loading','setupSbar');
+    await loadNFTs(evm);
+    hs();
+
+  }catch(e){
     ss('Error: '+e.message,'error');
-  } finally {
+  }finally{
     document.getElementById('loadBtn').disabled=false;
   }
 }
 
-// restore last address
+// restore saved addresses
 window.addEventListener('DOMContentLoaded',()=>{
-  const saved=localStorage.getItem('cysic_addr');
-  if(saved) document.getElementById('addrIn').value=saved;
-  document.getElementById('addrIn').addEventListener('keydown',e=>{if(e.key==='Enter')loadAll();});
+  const e=localStorage.getItem('c_evm'),w=localStorage.getItem('c_worker'),k=localStorage.getItem('c_keplr');
+  if(e)document.getElementById('inEVM').value=e;
+  if(w)document.getElementById('inWorker').value=w;
+  if(k)document.getElementById('inKeplr').value=k;
+  document.querySelectorAll('.addr-input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')loadAll();}));
 });
 </script>
 </body>
