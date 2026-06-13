@@ -147,7 +147,7 @@ a.hl:hover{text-decoration:underline}
   <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver">v5.2.1</span>
+    <span class="ver">v5.3.0</span>
   </div>
 </div>
 
@@ -200,9 +200,7 @@ a.hl:hover{text-decoration:underline}
   <!-- tabs -->
   <div class="tabs">
     <button class="tab active" onclick="sw('overview')">Overview</button>
-    <button class="tab" onclick="sw('nft')">NFTs</button>
     <button class="tab" onclick="sw('uptime')">Uptime</button>
-    <button class="tab" onclick="sw('balances')">Balances/Stake</button>
     <button class="tab" onclick="sw('alerts')">Alerts</button>
   </div>
 
@@ -212,8 +210,31 @@ a.hl:hover{text-decoration:underline}
       <div class="card g"><div class="clabel">CYS Balance</div><div class="cval" id="oBal">—</div><div class="csub">Available</div></div>
       <div class="card c"><div class="clabel">Staking Rewards</div><div class="cval" id="oStakeR">—</div><div class="csub">Unclaimed</div></div>
       <div class="card a"><div class="clabel">Staked</div><div class="cval" id="oStaked">—</div><div class="csub">Delegated</div></div>
-      <div class="card p"><div class="clabel">NFTs</div><div class="cval" id="oNFT">—</div><div class="csub">Cysic CUBE</div></div>
+      <div class="card p"><div class="clabel">NFTs</div><div class="cval" id="oNFT">—</div><div class="csub">Cysic CUBE · Base</div></div>
+      <div class="card"><div class="clabel">Unbonding</div><div class="cval" id="oUnbond">—</div><div class="csub">Releasing</div></div>
+      <div class="card r"><div class="clabel">Task Rewards</div><div class="cval" id="oTaskR">—</div><div class="csub">From EVM chain</div></div>
       <div class="card"><div class="clabel">Last Activity</div><div class="cval" id="oLast" style="font-size:13px">—</div><div class="csub">Most recent tx</div></div>
+    </div>
+
+    <!-- NFT inline -->
+    <div class="sec">
+      <div class="sec-head"><div class="dot" style="background:var(--gold)"></div><div class="sec-title">Cysic CUBE NFTs — Base Chain</div><div class="sec-badge" id="nftBadge">0</div></div>
+      <div id="nftGrid" class="nft-grid"><div class="nft-empty">Loading NFTs...</div></div>
+      <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Multiplier Boost</span>
+        <span id="multiVal" style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold2)">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Balances inline -->
+    <div class="sec">
+      <div class="sec-head"><div class="dot a"></div><div class="sec-title">Cosmos Chain — Balances/Stake</div></div>
+      <div class="cg">
+        <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cAvail">—</div></div>
+        <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cStaked">—</div></div>
+        <div class="cg-item"><div class="cg-label">Delegation Rewards</div><div class="cg-val" id="cDelR">—</div></div>
+        <div class="cg-item"><div class="cg-label">Unbonding</div><div class="cg-val" id="cUnbond">—</div></div>
+      </div>
     </div>
     <div class="sec">
       <div class="sec-head"><div class="dot g"></div><div class="sec-title">Recent Transactions</div><div class="sec-badge" id="txBadge">0</div></div>
@@ -224,10 +245,6 @@ a.hl:hover{text-decoration:underline}
     </div>
   </div>
 
-  <!-- NFT -->
-  <div class="panel" id="tab-nft">
-    <div class="sec">
-      <div class="sec-head"><div class="dot" style="background:var(--gold)"></div><div class="sec-title">Cysic CUBE — Base Chain</div><div class="sec-badge" id="nftBadge">0</div></div>
       <div id="nftGrid" class="nft-grid"><div class="nft-empty">Loading NFTs...</div></div>
       <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
         <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Multiplier Boost</span>
@@ -251,10 +268,6 @@ a.hl:hover{text-decoration:underline}
     </div>
   </div>
 
-  <!-- BALANCES -->
-  <div class="panel" id="tab-balances">
-    <div class="sec">
-      <div class="sec-head"><div class="dot a"></div><div class="sec-title">Cosmos Chain Balances</div></div>
       <div class="cg">
         <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cAvail">—</div></div>
         <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cStaked">—</div></div>
@@ -520,6 +533,7 @@ async function loadAll(){
     let totalR=0;delR.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
     document.getElementById('oStakeR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
     document.getElementById('oStaked').textContent=fmtCoin(staked);
+    document.getElementById('oUnbond').textContent=fmtCoin(unbond);
     document.getElementById('oLast').textContent=lastTx?fmtDate(lastTx):'No txs';
     document.getElementById('txBadge').textContent=txs.length+(txs.length>=50?'+':'');
     const tb=document.getElementById('txTable');
@@ -559,11 +573,26 @@ async function loadAll(){
 
     // NFTs async
     await loadNFTs(evm);
+    // EVM task rewards async
+    await loadEVMRewards(worker);
 
   }catch(e){
     ss('Error: '+e.message,'error');
   }finally{
     document.getElementById('loadBtn').disabled=false;
+  }
+}
+
+async function loadEVMRewards(workerAddr){
+  try{
+    const r=await fetch(`https://explorer-evm.cysic.xyz/api/v2/addresses/${workerAddr}?`);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    const bal=d.coin_balance?parseFloat(d.coin_balance)/1e18:0;
+    document.getElementById('oTaskR').textContent=bal.toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+  }catch(e){
+    document.getElementById('oTaskR').textContent='N/A';
+    console.log('EVM rewards error:',e.message);
   }
 }
 
