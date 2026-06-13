@@ -147,7 +147,7 @@ a.hl:hover{text-decoration:underline}
   <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver">v5.0.0</span>
+    <span class="ver">v5.1.0</span>
   </div>
 </div>
 
@@ -229,10 +229,9 @@ a.hl:hover{text-decoration:underline}
     <div class="sec">
       <div class="sec-head"><div class="dot" style="background:var(--gold)"></div><div class="sec-title">Cysic CUBE — Base Chain</div><div class="sec-badge" id="nftBadge">0</div></div>
       <div id="nftGrid" class="nft-grid"><div class="nft-empty">Loading NFTs...</div></div>
-      <div class="multi-wrap">
-        <div class="multi-label">Multiplier Boost</div>
-        <div class="multi-bg"><div class="multi-fill" id="multiBar" style="width:5%"></div></div>
-        <div class="multi-info"><span>1.0x (base)</span><span id="multiVal">Loading...</span><span>1.2x (max)</span></div>
+      <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Multiplier Boost</span>
+        <span id="multiVal" style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold2)">Loading...</span>
       </div>
     </div>
   </div>
@@ -403,20 +402,27 @@ function renderTimeline(txs){
 /* ── NFTs ── */
 async function loadNFTs(evmAddr){
   try{
-    let items=[],url=`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`;
+    // Use address NFT endpoint filtered by contract
+    let items=[],url=`https://base.blockscout.com/api/v2/addresses/${evmAddr}/nft?type=ERC-721`;
     while(url){
       const r=await fetch(url);
       if(!r.ok)throw new Error('HTTP '+r.status);
       const d=await r.json();
-      items=items.concat(d.items||[]);
-      url=d.next_page_params?`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}&page_token=${encodeURIComponent(JSON.stringify(d.next_page_params))}`:null;
+      // filter only our contract
+      const filtered=(d.items||[]).filter(i=>i.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
+      items=items.concat(filtered);
+      if(d.next_page_params){
+        const p=new URLSearchParams();
+        Object.entries(d.next_page_params).forEach(([k,v])=>p.set(k,v));
+        url=`https://base.blockscout.com/api/v2/addresses/${evmAddr}/nft?type=ERC-721&${p}`;
+      } else url=null;
     }
     document.getElementById('oNFT').textContent=items.length;
     document.getElementById('nftBadge').textContent=items.length;
     if(!items.length){
       document.getElementById('nftGrid').innerHTML='<div class="nft-empty">No Cysic CUBE NFTs found on Base.</div>';
       document.getElementById('multiVal').textContent='No boost (1.0x)';
-      document.getElementById('multiBar').style.width='5%';
+  
       return;
     }
     const nfts=items.map(item=>{
@@ -441,7 +447,7 @@ async function loadNFTs(evmAddr){
     }).join('');
     let best=1.0;
     nfts.forEach(n=>{const tName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';if(TIERS[tName].multi>best)best=TIERS[tName].multi;});
-    document.getElementById('multiBar').style.width=Math.max(((best-1)/0.2)*100,5)+'%';
+
     document.getElementById('multiVal').textContent=best+'x boost';
   }catch(e){
     document.getElementById('nftGrid').innerHTML=`<div class="nft-empty">Could not load NFTs: ${e.message}</div>`;
