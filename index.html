@@ -21,14 +21,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
 .net-badge{font-family:var(--mono);font-size:10px;padding:3px 10px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-radius:20px;color:var(--gold)}
 .ver{font-family:var(--mono);font-size:10px;color:var(--muted)}
+/* SETUP */
 .setup{max-width:520px;margin:3rem auto;padding:0 1.5rem}
 .setup-title{font-size:22px;font-weight:700;color:var(--gold2);margin-bottom:6px}
 .setup-sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
 .ig{margin-bottom:12px}
 .il{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:6px}
 .itag{font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600}
-.t-base{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
+.t-evm{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
 .t-worker{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2)}
+.t-cosmos{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
 .ai{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;transition:border-color .2s}
 .ai:focus{border-color:var(--gold)}
 .ai::placeholder{color:var(--muted)}
@@ -36,6 +38,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .btn-load{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),#8b6914);border:none;border-radius:8px;color:#000;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:opacity .15s}
 .btn-load:hover{opacity:.85}
 .btn-load:disabled{opacity:.4;cursor:not-allowed}
+/* STATUS */
 .sbar{padding:10px 14px;border-radius:8px;font-size:13px;display:none;align-items:center;gap:8px;margin:12px 0}
 .sbar.show{display:flex}
 .sbar.loading{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);color:var(--cyan)}
@@ -43,12 +46,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .sbar.ok{background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);color:var(--green)}
 .spin{width:13px;height:13px;border:2px solid rgba(0,212,255,.3);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* MAIN */
 .main{padding:1.5rem 2rem 4rem;max-width:960px;display:none}
 .addr-bar{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.ai-chip{display:flex;align-items:center;gap:5px;font-size:11px}
+.ac{display:flex;align-items:center;gap:5px}
 .av{font-family:var(--mono);font-size:11px;color:var(--text)}
 .btn-edit{margin-left:auto;font-size:11px;padding:4px 10px;background:var(--s2);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer}
 .btn-edit:hover{color:var(--text)}
+/* HEALTH */
 .health-wrap{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
 .hring-wrap{position:relative;width:110px;height:110px;flex-shrink:0}
 .hring{transform:rotate(-90deg)}
@@ -58,29 +63,33 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .hscore{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1}
 .hlabel{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 .hinfo{flex:1;min-width:180px}
-.htitle{font-size:16px;font-weight:600;margin-bottom:5px}
-.hsub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.htitle{font-size:16px;font-weight:600;margin-bottom:6px}
+.hsub{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px}
 .factors{display:flex;gap:8px;flex-wrap:wrap}
 .factor{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;background:var(--s2);border-radius:20px;border:1px solid var(--border)}
 .fdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+/* TABS */
 .tabs{display:flex;gap:2px;margin-bottom:1.25rem;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:4px}
 .tab{flex:1;padding:9px;text-align:center;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-radius:8px;transition:all .2s;border:none;background:none}
 .tab:hover{color:var(--text)}
 .tab.active{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));color:var(--gold2);border:1px solid rgba(201,168,76,.2)}
 .panel{display:none}.panel.active{display:block}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:1.25rem}
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:1.25rem}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.1rem;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cc,var(--gold))}
 .card.g{--cc:var(--green)}.card.c{--cc:var(--cyan)}.card.p{--cc:var(--purple)}.card.r{--cc:var(--red)}.card.a{--cc:var(--amber)}
 .clabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
-.cval{font-family:var(--mono);font-size:18px;font-weight:600;line-height:1}
+.cval{font-family:var(--mono);font-size:17px;font-weight:600;line-height:1}
 .csub{font-size:11px;color:var(--muted);margin-top:4px}
+/* SECTION */
 .sec{background:var(--s1);border:1px solid var(--border);border-radius:10px;margin-bottom:1.1rem;overflow:hidden}
 .sec-head{padding:11px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .sec-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500}
 .sec-badge{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--muted);background:var(--s2);padding:2px 8px;border-radius:10px}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
 .dot.g{background:var(--green)}.dot.c{background:var(--cyan)}.dot.r{background:var(--red)}.dot.a{background:var(--amber)}
+/* TABLE */
 table{width:100%;border-collapse:collapse}
 th{padding:9px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--s2);border-bottom:1px solid var(--border)}
 td{padding:10px 14px;font-size:12px;border-bottom:1px solid rgba(28,42,56,.6)}
@@ -92,35 +101,33 @@ a.hl:hover{text-decoration:underline}
 .badge.ok{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2)}
 .badge.fail{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
 .empty td{text-align:center;color:var(--muted);padding:2rem}
-.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;padding:1.25rem}
+/* NFT */
+.nft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;padding:1.1rem}
 .nft-card{background:var(--s2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s}
 .nft-card:hover{border-color:var(--gold)}
 .nft-img-wrap{width:100%;aspect-ratio:1;background:var(--s3);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .nft-img-wrap img{width:100%;height:100%;object-fit:cover}
-.nft-info{padding:8px 10px}
-.nft-name{font-size:12px;font-weight:600;margin-bottom:3px}
-.nft-id{font-family:var(--mono);font-size:10px;color:var(--muted)}
-.nft-tier{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;margin-top:4px}
+.nft-info{padding:7px 9px}
+.nft-name{font-size:11px;font-weight:600;margin-bottom:2px}
+.nft-tier{display:inline-block;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700;margin-top:3px}
 .t1{background:rgba(0,212,255,.1);color:var(--cyan);border:1px solid rgba(0,212,255,.2)}
 .t2{background:rgba(201,168,76,.1);color:var(--gold2);border:1px solid rgba(201,168,76,.2)}
 .t3{background:rgba(124,58,237,.1);color:#a78bfa;border:1px solid rgba(124,58,237,.2)}
 .t4{background:rgba(255,82,82,.1);color:var(--red);border:1px solid rgba(255,82,82,.2)}
 .nft-empty{padding:2rem;text-align:center;color:var(--muted);font-size:13px}
-.multi-wrap{padding:1rem 1.25rem;border-top:1px solid var(--border)}
-.multi-label{font-size:11px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
-.multi-bg{height:8px;background:var(--s3);border-radius:4px;overflow:hidden;margin-bottom:6px}
-.multi-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--green));transition:width 1s ease}
-.multi-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
-.tl-bars{display:flex;gap:3px;align-items:flex-end;height:40px;padding:1rem 1.25rem 0}
-.tl-bar{flex:1;border-radius:3px;min-height:4px;position:relative;cursor:pointer}
-.tl-bar:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--s3);border:1px solid var(--border);padding:4px 8px;border-radius:5px;font-size:10px;white-space:nowrap;color:var(--text);z-index:10}
-.tl-stats{display:flex;justify-content:space-between;padding:.5rem 1.25rem 1rem;font-size:11px;color:var(--muted)}
+/* COSMOS GRID */
 .cg{display:grid;grid-template-columns:1fr 1fr}
-.cg-item{padding:14px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cg-item{padding:13px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
 .cg-item:nth-child(even){border-right:none}
 .cg-item:nth-last-child(-n+2){border-bottom:none}
 .cg-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px}
 .cg-val{font-family:var(--mono);font-size:14px;font-weight:600}
+/* UPTIME */
+.tl-bars{display:flex;gap:3px;align-items:flex-end;height:40px;padding:1rem 1.25rem 0}
+.tl-bar{flex:1;border-radius:3px;min-height:4px;position:relative;cursor:pointer}
+.tl-bar:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--s3);border:1px solid var(--border);padding:4px 8px;border-radius:5px;font-size:10px;white-space:nowrap;color:var(--text);z-index:10}
+.tl-stats{display:flex;justify-content:space-between;padding:.5rem 1.25rem 1rem;font-size:11px;color:var(--muted)}
+/* ALERTS */
 .al-wrap{padding:1.25rem}
 .al-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .al-input{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none;width:110px}
@@ -147,7 +154,7 @@ a.hl:hover{text-decoration:underline}
   <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver">v5.3.0</span>
+    <span class="ver">v6.0.0</span>
   </div>
 </div>
 
@@ -158,30 +165,30 @@ a.hl:hover{text-decoration:underline}
     <div class="setup-sub">Enter your addresses to load your full node dashboard.</div>
     <div id="sb" class="sbar"></div>
     <div class="ig">
-      <div class="il"><span class="itag t-base">EVM / BASE</span> Main Wallet Address</div>
+      <div class="il"><span class="itag t-evm">EVM / BASE</span> Main Wallet Address</div>
       <input class="ai" id="inEVM" placeholder="0x..." spellcheck="false"/>
-      <div class="note">Used for NFTs on Base. Cosmos address is auto-derived.</div>
+      <div class="note">Used for NFTs on Base. Cosmos address auto-derived.</div>
     </div>
     <div class="ig">
       <div class="il"><span class="itag t-worker">WORKER</span> Worker Address</div>
       <input class="ai" id="inWorker" placeholder="0x..." spellcheck="false"/>
-      <div class="note">Auto-generated by node software (~/.cysic/keys/)</div>
+      <div class="note">Auto-generated by node (~/.cysic/keys/)</div>
     </div>
     <button class="btn-load" id="loadBtn" onclick="loadAll()">Load Dashboard</button>
-    <div style="font-size:11px;color:var(--muted);margin-top:10px">All data fetched from public blockchain APIs. Nothing stored on servers.</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px">All data from public blockchain APIs. Nothing stored on servers.</div>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main" id="mainDash">
   <div class="addr-bar">
-    <div class="ai-chip"><span class="itag t-base">EVM</span><span class="av" id="dEVM">—</span></div>
-    <div class="ai-chip"><span class="itag t-worker">WORKER</span><span class="av" id="dWorker">—</span></div>
-    <div class="ai-chip"><span style="font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600;background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2)">COSMOS</span><span class="av" id="dKeplr">—</span></div>
+    <div class="ac"><span class="itag t-evm">EVM</span><span class="av" id="dEVM">—</span></div>
+    <div class="ac"><span class="itag t-worker">WORKER</span><span class="av" id="dWorker">—</span></div>
+    <div class="ac"><span class="itag t-cosmos">COSMOS</span><span class="av" id="dKeplr">—</span></div>
     <button class="btn-edit" onclick="resetDash()">← Edit</button>
   </div>
 
-  <!-- health -->
+  <!-- HEALTH -->
   <div class="health-wrap">
     <div class="hring-wrap">
       <svg class="hring" width="110" height="110" viewBox="0 0 110 110">
@@ -197,38 +204,40 @@ a.hl:hover{text-decoration:underline}
     </div>
   </div>
 
-  <!-- tabs -->
+  <!-- TABS -->
   <div class="tabs">
     <button class="tab active" onclick="sw('overview')">Overview</button>
     <button class="tab" onclick="sw('uptime')">Uptime</button>
     <button class="tab" onclick="sw('alerts')">Alerts</button>
   </div>
 
-  <!-- OVERVIEW -->
+  <!-- OVERVIEW TAB -->
   <div class="panel active" id="tab-overview">
+    <!-- Summary cards -->
     <div class="cards">
       <div class="card g"><div class="clabel">CYS Balance</div><div class="cval" id="oBal">—</div><div class="csub">Available</div></div>
       <div class="card c"><div class="clabel">Staking Rewards</div><div class="cval" id="oStakeR">—</div><div class="csub">Unclaimed</div></div>
       <div class="card a"><div class="clabel">Staked</div><div class="cval" id="oStaked">—</div><div class="csub">Delegated</div></div>
-      <div class="card p"><div class="clabel">NFTs</div><div class="cval" id="oNFT">—</div><div class="csub">Cysic CUBE · Base</div></div>
       <div class="card"><div class="clabel">Unbonding</div><div class="cval" id="oUnbond">—</div><div class="csub">Releasing</div></div>
-      <div class="card r"><div class="clabel">Task Rewards</div><div class="cval" id="oTaskR">—</div><div class="csub">From EVM chain</div></div>
+      <div class="card p"><div class="clabel">NFTs</div><div class="cval" id="oNFT">—</div><div class="csub">Cysic CUBE</div></div>
+      <div class="card r"><div class="clabel">Task Rewards</div><div class="cval" id="oTaskR">—</div><div class="csub">Worker EVM balance</div></div>
       <div class="card"><div class="clabel">Last Activity</div><div class="cval" id="oLast" style="font-size:13px">—</div><div class="csub">Most recent tx</div></div>
     </div>
 
-    <!-- NFT inline -->
+    <!-- NFT Section -->
     <div class="sec">
-      <div class="sec-head"><div class="dot" style="background:var(--gold)"></div><div class="sec-title">Cysic CUBE NFTs — Base Chain</div><div class="sec-badge" id="nftBadge">0</div></div>
-      <div id="nftGrid" class="nft-grid"><div class="nft-empty">Loading NFTs...</div></div>
-      <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
-        <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Multiplier Boost</span>
-        <span id="multiVal" style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold2)">Loading...</span>
+      <div class="sec-head">
+        <div class="dot" style="background:var(--gold)"></div>
+        <div class="sec-title">Cysic CUBE NFTs — Base Chain</div>
+        <div class="sec-badge" id="nftBadge">0</div>
+        <span id="multiChip" style="display:none;margin-left:8px;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(201,168,76,.1);color:var(--gold2);border:1px solid rgba(201,168,76,.2)"></span>
       </div>
+      <div id="nftGrid" class="nft-grid"><div class="nft-empty">Loading NFTs...</div></div>
     </div>
 
-    <!-- Balances inline -->
+    <!-- Balances/Stake Section -->
     <div class="sec">
-      <div class="sec-head"><div class="dot a"></div><div class="sec-title">Cosmos Chain — Balances/Stake</div></div>
+      <div class="sec-head"><div class="dot a"></div><div class="sec-title">Cosmos Chain — Balances / Stake</div></div>
       <div class="cg">
         <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cAvail">—</div></div>
         <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cStaked">—</div></div>
@@ -236,8 +245,16 @@ a.hl:hover{text-decoration:underline}
         <div class="cg-item"><div class="cg-label">Unbonding</div><div class="cg-val" id="cUnbond">—</div></div>
       </div>
     </div>
+
+    <!-- Validator rewards -->
     <div class="sec">
-      <div class="sec-head"><div class="dot g"></div><div class="sec-title">Recent Transactions</div><div class="sec-badge" id="txBadge">0</div></div>
+      <div class="sec-head"><div class="dot g"></div><div class="sec-title">Rewards by Validator</div><div class="sec-badge" id="valBadge">0</div></div>
+      <div id="valList"></div>
+    </div>
+
+    <!-- Tx history -->
+    <div class="sec">
+      <div class="sec-head"><div class="dot c"></div><div class="sec-title">Recent Transactions</div><div class="sec-badge" id="txBadge">0</div></div>
       <div style="overflow-x:auto">
         <table><thead><tr><th>Hash</th><th>Type</th><th>Height</th><th>Date</th><th>Status</th></tr></thead>
         <tbody id="txTable"></tbody></table>
@@ -245,15 +262,7 @@ a.hl:hover{text-decoration:underline}
     </div>
   </div>
 
-      <div id="nftGrid" class="nft-grid"><div class="nft-empty">Loading NFTs...</div></div>
-      <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
-        <span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Multiplier Boost</span>
-        <span id="multiVal" style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold2)">Loading...</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- UPTIME -->
+  <!-- UPTIME TAB -->
   <div class="panel" id="tab-uptime">
     <div class="sec">
       <div class="sec-head"><div class="dot c"></div><div class="sec-title">30-Day Activity Timeline</div><div class="sec-badge" id="uptimeBadge">—</div></div>
@@ -268,20 +277,7 @@ a.hl:hover{text-decoration:underline}
     </div>
   </div>
 
-      <div class="cg">
-        <div class="cg-item"><div class="cg-label">Available CYS</div><div class="cg-val" id="cAvail">—</div></div>
-        <div class="cg-item"><div class="cg-label">Staked CGT</div><div class="cg-val" id="cStaked">—</div></div>
-        <div class="cg-item"><div class="cg-label">Delegation Rewards</div><div class="cg-val" id="cDelR">—</div></div>
-        <div class="cg-item"><div class="cg-label">Unbonding</div><div class="cg-val" id="cUnbond">—</div></div>
-      </div>
-    </div>
-    <div class="sec">
-      <div class="sec-head"><div class="dot"></div><div class="sec-title">Rewards by Validator</div><div class="sec-badge" id="valBadge">0</div></div>
-      <div id="valList"></div>
-    </div>
-  </div>
-
-  <!-- ALERTS -->
+  <!-- ALERTS TAB -->
   <div class="panel" id="tab-alerts">
     <div class="sec">
       <div class="sec-head"><div class="dot r"></div><div class="sec-title">Alert Thresholds</div></div>
@@ -308,39 +304,40 @@ a.hl:hover{text-decoration:underline}
 <script>
 const GQL='https://hasura.cysic.xyz/v1/graphql';
 const NFT_CONTRACT='0x03bea16696caa7c1948ecf83e9b251f41002fcf3';
+// NFT tiers - multiplier per NFT per docs
 const TIERS={
-  Tesseract:{tier:1,multi:1.0,cls:'t1'},
-  Monolith:{tier:2,multi:1.05,cls:'t2'},
-  Allspark:{tier:3,multi:1.1,cls:'t3'},
-  MotherBox:{tier:4,multi:1.2,cls:'t4'},
+  Tesseract:{tier:1,multi:20,cls:'t1',img:'https://cube.cysicfoundation.org/nft-media/Tier1_Tesseract.png'},
+  Monolith:{tier:2,multi:15,cls:'t2',img:'https://cube.cysicfoundation.org/nft-media/Tier2_Monolith.png'},
+  Allspark:{tier:3,multi:10,cls:'t3',img:'https://cube.cysicfoundation.org/nft-media/Tier3_Allspark.png'},
+  MotherBox:{tier:4,multi:5,cls:'t4',img:'https://cube.cysicfoundation.org/nft-media/Tier4_MotherBox.png'},
 };
 let ST={};
 
-/* ── bech32 (inline) ── */
-const B32_CHARSET='qpzry9x8gf2tvdw0s3jn54khce6mua7l';
-const B32_GEN=[0x3b6a57b2,0x26508e6d,0x1ea119fa,0x3d4233dd,0x2a1462b3];
-function b32Polymod(v){let c=1;for(const d of v){const b=c>>25;c=((c&0x1ffffff)<<5)^d;for(let i=0;i<5;i++)if((b>>i)&1)c^=B32_GEN[i];}return c;}
-function b32Expand(hrp){const r=[];for(let i=0;i<hrp.length;i++)r.push(hrp.charCodeAt(i)>>5);r.push(0);for(let i=0;i<hrp.length;i++)r.push(hrp.charCodeAt(i)&31);return r;}
-function b32Checksum(hrp,data){const v=b32Expand(hrp).concat(data,[0,0,0,0,0,0]);const p=b32Polymod(v)^1;const r=[];for(let i=0;i<6;i++)r.push((p>>(5*(5-i)))&31);return r;}
-function b32Encode(hrp,data){const c=data.concat(b32Checksum(hrp,data));return hrp+'1'+c.map(d=>B32_CHARSET[d]).join('');}
-function cvBits(data,f,t,pad){let acc=0,bits=0;const r=[],mx=(1<<t)-1;for(const v of data){acc=((acc<<f)|v)&0xffff;bits+=f;while(bits>=t){bits-=t;r.push((acc>>bits)&mx);}}if(pad&&bits>0)r.push((acc<<(t-bits))&mx);return r;}
+/* ── bech32 ── */
+const BC='qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+const BG=[0x3b6a57b2,0x26508e6d,0x1ea119fa,0x3d4233dd,0x2a1462b3];
+function bPoly(v){let c=1;for(const d of v){const b=c>>25;c=((c&0x1ffffff)<<5)^d;for(let i=0;i<5;i++)if((b>>i)&1)c^=BG[i];}return c;}
+function bExp(h){const r=[];for(let i=0;i<h.length;i++)r.push(h.charCodeAt(i)>>5);r.push(0);for(let i=0;i<h.length;i++)r.push(h.charCodeAt(i)&31);return r;}
+function bChk(h,d){const v=bExp(h).concat(d,[0,0,0,0,0,0]);const p=bPoly(v)^1;const r=[];for(let i=0;i<6;i++)r.push((p>>(5*(5-i)))&31);return r;}
+function bEnc(h,d){return h+'1'+d.concat(bChk(h,d)).map(x=>BC[x]).join('');}
+function cvB(data,f,t,pad){let acc=0,bits=0;const r=[],mx=(1<<t)-1;for(const v of data){acc=((acc<<f)|v)&0xffff;bits+=f;while(bits>=t){bits-=t;r.push((acc>>bits)&mx);}}if(pad&&bits>0)r.push((acc<<(t-bits))&mx);return r;}
 function evmToKeplr(addr){
   const bytes=addr.replace('0x','').toLowerCase().match(/.{2}/g).map(b=>parseInt(b,16));
-  return b32Encode('cysic',cvBits(bytes,8,5,true));
+  return bEnc('cysic',cvB(bytes,8,5,true));
 }
 
 /* ── utils ── */
 function short(a,s=6,e=4){return a?a.slice(0,s)+'...'+a.slice(-e):'—';}
-function fmtDate(iso){if(!iso)return'—';const d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtDate(iso){if(!iso)return'—';return new Date(iso).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
 function fmtCoin(coins){if(!coins||!coins.length)return'0';const c=coins[0];return(parseFloat(c.amount)/1e18).toLocaleString('en',{maximumFractionDigits:4})+' '+c.denom.toUpperCase();}
 
-/* ── status ── */
+/* ── status bar ── */
 function ss(msg,type){const b=document.getElementById('sb');b.className='sbar show '+type;b.innerHTML=(type==='loading'?'<div class="spin"></div>':'')+`<span>${msg}</span>`;}
 function hs(){document.getElementById('sb').className='sbar';}
 
 /* ── tabs ── */
 function sw(id){
-  ['overview','nft','uptime','balances','alerts'].forEach((t,i)=>{
+  ['overview','uptime','alerts'].forEach((t,i)=>{
     document.querySelectorAll('.tab')[i].classList.toggle('active',t===id);
     document.getElementById('tab-'+t).classList.toggle('active',t===id);
   });
@@ -370,15 +367,17 @@ function calcHealth(bal,txCount,lastTx){
   }
   return{score:Math.min(score,100),factors:f};
 }
-function renderHealth(score,factors){
+function renderHealth(score,factors,lastTx){
   const col=score>=70?'var(--green)':score>=40?'var(--amber)':'var(--red)';
-  const ring=document.getElementById('hRing');
-  ring.style.stroke=col;
-  ring.style.strokeDashoffset=289-(289*score/100);
+  document.getElementById('hRing').style.stroke=col;
+  document.getElementById('hRing').style.strokeDashoffset=289-(289*score/100);
   document.getElementById('hScore').textContent=score;
   document.getElementById('hScore').style.color=col;
   document.getElementById('hTitle').textContent=score>=70?'Node is Healthy':score>=40?'Needs Attention':'Node at Risk';
-  document.getElementById('hSub').textContent=score>=70?'Your verifier is performing well.':score>=40?'Some metrics need attention.':'Check balance and activity.';
+  const lastMs=lastTx?Date.now()-new Date(lastTx):Infinity;
+  const online=lastMs<172800000;
+  const statusChip=`<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:10px;background:${online?'rgba(0,230,118,.1)':'rgba(255,82,82,.1)'};border:1px solid ${online?'rgba(0,230,118,.25)':'rgba(255,82,82,.25)'};color:${online?'var(--green)':'var(--red)'}"><span style="width:6px;height:6px;border-radius:50%;background:currentColor;${online?'box-shadow:0 0 5px var(--green)':''}"></span>${online?'Online':'Offline'}</span>`;
+  document.getElementById('hSub').innerHTML=statusChip+'&nbsp; '+(score>=70?'Verifier performing well.':score>=40?'Some metrics need attention.':'Check balance and activity.');
   document.getElementById('hFactors').innerHTML=factors.map(f=>`<div class="factor"><span class="fdot" style="background:${f.c}"></span>${f.l}</div>`).join('');
 }
 
@@ -415,59 +414,62 @@ function renderTimeline(txs){
 /* ── NFTs ── */
 async function loadNFTs(evmAddr){
   try{
-    let items=[];
-    // ERC-1155 contract - use tokens endpoint to get value (quantity)
-    const r1=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/tokens?type=ERC-1155`);
-    if(!r1.ok) throw new Error('HTTP '+r1.status);
-    const d1=await r1.json();
-    const tok=(d1.items||[]).find(t=>t.token?.address_hash?.toLowerCase()===NFT_CONTRACT.toLowerCase()||t.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
-    const nftCount=tok?parseInt(tok.value||0):0;
-    // get instance metadata
-    const r2=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
-    const d2=r2.ok?await r2.json():{items:[]};
-    const instance=d2.items?.[0]||null;
-    // build items array based on actual count
-    if(nftCount>0){
-      const meta=instance?.metadata||{name:'Tesseract',image:'https://cube.cysicfoundation.org/nft-media/Tier1_Tesseract.png'};
-      const imgUrl=instance?.image_url||meta.image||'https://cube.cysicfoundation.org/nft-media/Tier1_Tesseract.png';
-      const name=meta.name||'Tesseract';
-      for(let i=0;i<nftCount;i++) items.push({id:instance?.id||i+1,metadata:{...meta,image:imgUrl},name,img:imgUrl});
-    }
-    const displayCount=nftCount||items.length;
-    document.getElementById('oNFT').textContent=displayCount;
-    document.getElementById('nftBadge').textContent=displayCount;
-    if(!displayCount){
+    // ERC-1155 — get token balance from address tokens endpoint
+    const r=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/tokens?type=ERC-1155`);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    const tok=(d.items||[]).find(t=>{
+      const addr=t.token?.address_hash||t.token?.address||'';
+      return addr.toLowerCase()===NFT_CONTRACT.toLowerCase();
+    });
+    const count=tok?parseInt(tok.value||0):0;
+    document.getElementById('oNFT').textContent=count;
+    document.getElementById('nftBadge').textContent=count;
+    if(!count){
       document.getElementById('nftGrid').innerHTML='<div class="nft-empty">No Cysic CUBE NFTs found on Base.</div>';
-      document.getElementById('multiVal').textContent='No boost (1.0x)';
-  
       return;
     }
-    const nfts=items.map(item=>{
-      const meta=item.metadata||{};
-      const name=item.name||meta.name||('Token #'+item.id);
-      const img=item.img||(meta.image||meta.image_url||'').replace('ipfs://','https://ipfs.io/ipfs/');
-      return{id:item.id,name,img};
-    });
-    document.getElementById('nftGrid').innerHTML=nfts.map(n=>{
-      const tName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';
-      const t=TIERS[tName];
-      return`<div class="nft-card">
-        <div class="nft-img-wrap">
-          ${n.img?`<img src="${n.img}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span style=font-size:32px>🧊</span>'"/>`:'<span style="font-size:32px">🧊</span>'}
-        </div>
+    // get instance for metadata/name
+    const r2=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
+    const d2=r2.ok?await r2.json():{items:[]};
+    const inst=d2.items?.[0];
+    const meta=inst?.metadata||{};
+    const name=meta.name||'Tesseract';
+    const imgUrl=inst?.image_url||meta.image||TIERS[name]?.img||TIERS.Tesseract.img;
+    const tName=Object.keys(TIERS).find(k=>name.includes(k))||'Tesseract';
+    const t=TIERS[tName];
+    // render count cards
+    const cards=[];
+    for(let i=0;i<count;i++){
+      cards.push(`<div class="nft-card">
+        <div class="nft-img-wrap"><img src="${imgUrl}" alt="${name}" onerror="this.src='${t.img}'"/></div>
         <div class="nft-info">
-          <div class="nft-name">${n.name}</div>
-          <div class="nft-id">#${n.id}</div>
-          <span class="nft-tier ${t.cls}">Tier ${t.tier} · ${t.multi}x</span>
+          <div class="nft-name">${name} #${i+1}</div>
+          <span class="nft-tier ${t.cls}">Tier ${t.tier} · +${t.multi}%</span>
         </div>
-      </div>`;
-    }).join('');
-    let best=1.0;
-    nfts.forEach(n=>{const tName=Object.keys(TIERS).find(k=>n.name.includes(k))||'Tesseract';if(TIERS[tName].multi>best)best=TIERS[tName].multi;});
-
-    document.getElementById('multiVal').textContent=best+'x boost';
+      </div>`);
+    }
+    document.getElementById('nftGrid').innerHTML=cards.join('');
+    // multiplier: sum all NFTs, cap at 100%
+    const totalMulti=Math.min(count*t.multi,100);
+    const chip=document.getElementById('multiChip');
+    chip.style.display='inline-block';
+    chip.textContent=`🔥 +${totalMulti}% boost`;
   }catch(e){
     document.getElementById('nftGrid').innerHTML=`<div class="nft-empty">Could not load NFTs: ${e.message}</div>`;
+  }
+}
+
+/* ── EVM Task Rewards ── */
+async function loadEVMRewards(workerAddr){
+  try{
+    const r=await fetch(`https://explorer-evm.cysic.xyz/api/v2/addresses/${workerAddr}`);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d=await r.json();
+    const bal=d.coin_balance?parseFloat(d.coin_balance)/1e18:0;
+    document.getElementById('oTaskR').textContent=bal.toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+  }catch(e){
+    document.getElementById('oTaskR').textContent='N/A';
   }
 }
 
@@ -477,8 +479,8 @@ function checkAlerts(){
   const bT=parseFloat(document.getElementById('alBal').value)||10;
   const gT=parseFloat(document.getElementById('alGap').value)||7;
   const warns=[];
-  if(ST.balNum<bT)warns.push(`Balance ${ST.balNum.toFixed(2)} CYS < ${bT} CYS`);
-  if(ST.lastTx){const d=(Date.now()-new Date(ST.lastTx))/86400000;if(d>gT)warns.push(`No tx in ${d.toFixed(1)} days`);}
+  if(ST.balNum<bT)warns.push(`Balance ${ST.balNum.toFixed(2)} CYS < threshold ${bT} CYS`);
+  if(ST.lastTx){const d=(Date.now()-new Date(ST.lastTx))/86400000;if(d>gT)warns.push(`No tx in ${d.toFixed(1)} days (threshold: ${gT}d)`);}
   const wb=document.getElementById('alWarn'),gb=document.getElementById('alGood');
   if(warns.length){
     document.getElementById('alWarnMsg').textContent=warns.join(' · ');
@@ -507,7 +509,7 @@ async function loadAll(){
       {operationName:'Staked',variables:{address:keplr},query:'query Staked($address:String!){delegationBalance:action_delegation_total(address:$address){coins}}'},
       {operationName:'Unbond',variables:{address:keplr},query:'query Unbond($address:String!){unbondingBalance:action_unbonding_delegation_total(address:$address){coins}}'},
       {operationName:'Rewards',variables:{address:keplr},query:'query Rewards($address:String!){delegationRewards:action_delegation_reward(address:$address){validatorAddress:validator_address coins}}'},
-      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${keplr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{height timestamp}}}}'}
+      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${keplr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
     ])}).then(r=>r.json());
 
     const bal=res[0]?.data?.accountBalances?.coins||[];
@@ -521,20 +523,35 @@ async function loadAll(){
 
     // health
     const {score,factors}=calcHealth(balNum,txs.length,lastTx);
-    renderHealth(score,factors);
+    renderHealth(score,factors,lastTx);
 
     // addr bar
     document.getElementById('dEVM').textContent=short(evm);
     document.getElementById('dWorker').textContent=short(worker);
     document.getElementById('dKeplr').textContent=short(keplr,10,6);
 
-    // overview
+    // overview cards
     document.getElementById('oBal').textContent=balNum.toLocaleString('en',{maximumFractionDigits:4})+' CYS';
     let totalR=0;delR.forEach(r=>r.coins?.forEach(c=>totalR+=parseFloat(c.amount||0)));
     document.getElementById('oStakeR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
     document.getElementById('oStaked').textContent=fmtCoin(staked);
     document.getElementById('oUnbond').textContent=fmtCoin(unbond);
     document.getElementById('oLast').textContent=lastTx?fmtDate(lastTx):'No txs';
+
+    // cosmos section
+    document.getElementById('cAvail').textContent=fmtCoin(bal);
+    document.getElementById('cStaked').textContent=fmtCoin(staked);
+    document.getElementById('cDelR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
+    document.getElementById('cUnbond').textContent=fmtCoin(unbond);
+    document.getElementById('valBadge').textContent=delR.length;
+    document.getElementById('valList').innerHTML=delR.length?
+      delR.map(r=>`<div style="display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(28,42,56,.5);gap:12px;font-size:12px">
+        <span style="font-family:var(--mono);font-size:11px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.validatorAddress}</span>
+        <span style="font-family:var(--mono);color:var(--green);font-weight:600">${fmtCoin(r.coins)}</span>
+      </div>`).join('')
+      :'<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px">No delegation rewards</div>';
+
+    // tx table
     document.getElementById('txBadge').textContent=txs.length+(txs.length>=50?'+':'');
     const tb=document.getElementById('txTable');
     tb.innerHTML=txs.length?txs.slice(0,20).map(tx=>{
@@ -550,49 +567,19 @@ async function loadAll(){
 
     // uptime
     renderTimeline(txs);
-
-    // balances tab
-    document.getElementById('cAvail').textContent=fmtCoin(bal);
-    document.getElementById('cStaked').textContent=fmtCoin(staked);
-    document.getElementById('cDelR').textContent=(totalR/1e18).toLocaleString('en',{maximumFractionDigits:4})+' CYS';
-    document.getElementById('cUnbond').textContent=fmtCoin(unbond);
-    document.getElementById('valBadge').textContent=delR.length;
-    document.getElementById('valList').innerHTML=delR.length?
-      delR.map(r=>`<div style="display:flex;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(28,42,56,.5);gap:12px;font-size:12px">
-        <span style="font-family:var(--mono);font-size:11px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.validatorAddress}</span>
-        <span style="font-family:var(--mono);color:var(--green);font-weight:600">${fmtCoin(r.coins)}</span>
-      </div>`).join('')
-      :'<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px">No delegation rewards</div>';
-
-    // alerts
     checkAlerts();
 
     document.getElementById('setupScreen').style.display='none';
     document.getElementById('mainDash').style.display='block';
     hs();
 
-    // NFTs async
-    await loadNFTs(evm);
-    // EVM task rewards async
-    await loadEVMRewards(worker);
+    // async: NFTs + EVM rewards
+    await Promise.all([loadNFTs(evm), loadEVMRewards(worker)]);
 
   }catch(e){
     ss('Error: '+e.message,'error');
   }finally{
     document.getElementById('loadBtn').disabled=false;
-  }
-}
-
-async function loadEVMRewards(workerAddr){
-  try{
-    const r=await fetch(`https://explorer-evm.cysic.xyz/api/v2/addresses/${workerAddr}?`);
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const d=await r.json();
-    const bal=d.coin_balance?parseFloat(d.coin_balance)/1e18:0;
-    document.getElementById('oTaskR').textContent=bal.toLocaleString('en',{maximumFractionDigits:4})+' CYS';
-  }catch(e){
-    document.getElementById('oTaskR').textContent='N/A';
-    console.log('EVM rewards error:',e.message);
   }
 }
 
