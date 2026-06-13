@@ -575,7 +575,7 @@ async function loadAll(){
   if(!evm||!evm.startsWith('0x')){ss('EVM address must start with 0x','error');return;}
   if(!worker||!worker.startsWith('0x')){ss('Worker address must start with 0x','error');return;}
 
-  const keplr=evmToCysic(evm);
+  const keplr=evmToKeplr(evm);
 
   // save
   localStorage.setItem('c_evm',evm);
