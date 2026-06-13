@@ -147,7 +147,7 @@ a.hl:hover{text-decoration:underline}
   <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver">v5.2.0</span>
+    <span class="ver">v5.2.1</span>
   </div>
 </div>
 
@@ -403,48 +403,27 @@ function renderTimeline(txs){
 async function loadNFTs(evmAddr){
   try{
     let items=[];
-    // Try endpoint 1: address NFT collections
-    try{
-      const r1=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/nft/collections`);
-      if(r1.ok){
-        const d1=await r1.json();
-        const col=(d1.items||[]).find(c=>c.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
-        if(col&&col.token_instances){items=col.token_instances;}
-        else if(col){
-          // fetch instances for this collection
-          const r2=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
-          if(r2.ok){const d2=await r2.json();items=d2.items||[];}
-        }
-      }
-    }catch(e1){}
-    // fallback: try instances endpoint directly
-    if(!items.length){
-      const r3=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
-      if(r3.ok){const d3=await r3.json();items=d3.items||[];}
+    // ERC-1155 contract - use tokens endpoint to get value (quantity)
+    const r1=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/tokens?type=ERC-1155`);
+    if(!r1.ok) throw new Error('HTTP '+r1.status);
+    const d1=await r1.json();
+    const tok=(d1.items||[]).find(t=>t.token?.address_hash?.toLowerCase()===NFT_CONTRACT.toLowerCase()||t.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
+    const nftCount=tok?parseInt(tok.value||0):0;
+    // get instance metadata
+    const r2=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
+    const d2=r2.ok?await r2.json():{items:[]};
+    const instance=d2.items?.[0]||null;
+    // build items array based on actual count
+    if(nftCount>0){
+      const meta=instance?.metadata||{name:'Tesseract',image:'https://cube.cysicfoundation.org/nft-media/Tier1_Tesseract.png'};
+      const imgUrl=instance?.image_url||meta.image||'https://cube.cysicfoundation.org/nft-media/Tier1_Tesseract.png';
+      const name=meta.name||'Tesseract';
+      for(let i=0;i<nftCount;i++) items.push({id:instance?.id||i+1,metadata:{...meta,image:imgUrl},name,img:imgUrl});
     }
-    // fallback 2: address tokens
-    if(!items.length){
-      const r4=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/tokens?type=ERC-721%2CERC-1155`);
-      if(r4.ok){
-        const d4=await r4.json();
-        const tok=(d4.items||[]).find(t=>t.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
-        if(tok){
-          // we know count, fake items for display
-          const cnt=parseInt(tok.value||tok.token_instance_count||0);
-          // try to get actual instances
-          const r5=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
-          if(r5.ok){const d5=await r5.json();items=d5.items||[];}
-          if(!items.length&&cnt>0){
-            // create placeholder items
-            for(let i=0;i<cnt;i++)items.push({id:i+1,metadata:{name:'Tesseract',image:''},token:{name:'Cysic CUBE'}});
-          }
-        }
-      }
-    }
-    console.log('NFT items found:',items.length, JSON.stringify(items.slice(0,2)));
-    document.getElementById('oNFT').textContent=items.length;
-    document.getElementById('nftBadge').textContent=items.length;
-    if(!items.length){
+    const displayCount=nftCount||items.length;
+    document.getElementById('oNFT').textContent=displayCount;
+    document.getElementById('nftBadge').textContent=displayCount;
+    if(!displayCount){
       document.getElementById('nftGrid').innerHTML='<div class="nft-empty">No Cysic CUBE NFTs found on Base.</div>';
       document.getElementById('multiVal').textContent='No boost (1.0x)';
   
@@ -452,8 +431,8 @@ async function loadNFTs(evmAddr){
     }
     const nfts=items.map(item=>{
       const meta=item.metadata||{};
-      const name=meta.name||('Token #'+item.id);
-      let img=(meta.image||meta.image_url||'').replace('ipfs://','https://ipfs.io/ipfs/');
+      const name=item.name||meta.name||('Token #'+item.id);
+      const img=item.img||(meta.image||meta.image_url||'').replace('ipfs://','https://ipfs.io/ipfs/');
       return{id:item.id,name,img};
     });
     document.getElementById('nftGrid').innerHTML=nfts.map(n=>{
