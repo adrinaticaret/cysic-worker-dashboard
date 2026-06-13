@@ -147,7 +147,7 @@ a.hl:hover{text-decoration:underline}
   <span style="font-size:12px;color:var(--muted)">Worker Dashboard</span>
   <div class="header-right">
     <span class="net-badge">Mainnet</span>
-    <span class="ver">v5.1.0</span>
+    <span class="ver">v5.2.0</span>
   </div>
 </div>
 
@@ -402,21 +402,46 @@ function renderTimeline(txs){
 /* ── NFTs ── */
 async function loadNFTs(evmAddr){
   try{
-    // Use address NFT endpoint filtered by contract
-    let items=[],url=`https://base.blockscout.com/api/v2/addresses/${evmAddr}/nft?type=ERC-721`;
-    while(url){
-      const r=await fetch(url);
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      const d=await r.json();
-      // filter only our contract
-      const filtered=(d.items||[]).filter(i=>i.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
-      items=items.concat(filtered);
-      if(d.next_page_params){
-        const p=new URLSearchParams();
-        Object.entries(d.next_page_params).forEach(([k,v])=>p.set(k,v));
-        url=`https://base.blockscout.com/api/v2/addresses/${evmAddr}/nft?type=ERC-721&${p}`;
-      } else url=null;
+    let items=[];
+    // Try endpoint 1: address NFT collections
+    try{
+      const r1=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/nft/collections`);
+      if(r1.ok){
+        const d1=await r1.json();
+        const col=(d1.items||[]).find(c=>c.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
+        if(col&&col.token_instances){items=col.token_instances;}
+        else if(col){
+          // fetch instances for this collection
+          const r2=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
+          if(r2.ok){const d2=await r2.json();items=d2.items||[];}
+        }
+      }
+    }catch(e1){}
+    // fallback: try instances endpoint directly
+    if(!items.length){
+      const r3=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
+      if(r3.ok){const d3=await r3.json();items=d3.items||[];}
     }
+    // fallback 2: address tokens
+    if(!items.length){
+      const r4=await fetch(`https://base.blockscout.com/api/v2/addresses/${evmAddr}/tokens?type=ERC-721%2CERC-1155`);
+      if(r4.ok){
+        const d4=await r4.json();
+        const tok=(d4.items||[]).find(t=>t.token?.address?.toLowerCase()===NFT_CONTRACT.toLowerCase());
+        if(tok){
+          // we know count, fake items for display
+          const cnt=parseInt(tok.value||tok.token_instance_count||0);
+          // try to get actual instances
+          const r5=await fetch(`https://base.blockscout.com/api/v2/tokens/${NFT_CONTRACT}/instances?holder_address_hash=${evmAddr}`);
+          if(r5.ok){const d5=await r5.json();items=d5.items||[];}
+          if(!items.length&&cnt>0){
+            // create placeholder items
+            for(let i=0;i<cnt;i++)items.push({id:i+1,metadata:{name:'Tesseract',image:''},token:{name:'Cysic CUBE'}});
+          }
+        }
+      }
+    }
+    console.log('NFT items found:',items.length, JSON.stringify(items.slice(0,2)));
     document.getElementById('oNFT').textContent=items.length;
     document.getElementById('nftBadge').textContent=items.length;
     if(!items.length){
@@ -490,7 +515,7 @@ async function loadAll(){
       {operationName:'Staked',variables:{address:keplr},query:'query Staked($address:String!){delegationBalance:action_delegation_total(address:$address){coins}}'},
       {operationName:'Unbond',variables:{address:keplr},query:'query Unbond($address:String!){unbondingBalance:action_unbonding_delegation_total(address:$address){coins}}'},
       {operationName:'Rewards',variables:{address:keplr},query:'query Rewards($address:String!){delegationRewards:action_delegation_reward(address:$address){validatorAddress:validator_address coins}}'},
-      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${keplr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{timestamp}}}}'}
+      {operationName:'Txs',variables:{limit:51,offset:0,types:'{}',address:`{${keplr}}`},query:'query Txs($address:_text,$limit:bigint=50,$offset:bigint=0,$types:_text="{}"){messagesByAddress:messages_by_address(args:{addresses:$address,types:$types,limit:$limit,offset:$offset}){transaction{height hash success messages block{height timestamp}}}}'}
     ])}).then(r=>r.json());
 
     const bal=res[0]?.data?.accountBalances?.coins||[];
